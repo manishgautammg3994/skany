@@ -45,7 +45,12 @@ dependencies:
   flutter_localizations:
   
     sdk: flutter
-  get_storage: ^2.0.3
+  get_storage: 
+  screenshot: 
+  path_provider:
+  image_gallery_saver:
+  share_plus: ^4.4.0
+  permission_handler: ^10.0.1
   
 
 dev_dependencies:

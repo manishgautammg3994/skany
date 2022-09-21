@@ -6,5 +6,7 @@ Map<String, String> ar = {
   "scan_QR_code": "مسح رمز الاستجابة السريعة",
   "create_Qr_code": "إنشاء رمز الاستجابة السريعة",
   "enter_data": "أدخل البيانات",
-  "cancel": "يلغي"
+  "cancel": "يلغي",
+  "Failed to get QR": "Failed to get QR",
+  "save": "Save"
 };

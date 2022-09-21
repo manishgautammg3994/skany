@@ -6,4 +6,6 @@ Map<String, String> en = {
   "create_Qr_code": " Create QR Code",
   "enter_data": "Enter Data",
   "cancel": "Cancel",
+  "Failed to get QR": "Failed to get QR",
+  "save": "Save"
 };

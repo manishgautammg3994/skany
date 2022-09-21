@@ -1,9 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.antinna.skany">
+    <uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
    <application
+        android:requestLegacyExternalStorage="true"
         android:label="skany"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -38,5 +42,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            
     </application>
 </manifest>
