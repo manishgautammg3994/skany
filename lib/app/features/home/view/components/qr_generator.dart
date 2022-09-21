@@ -27,28 +27,29 @@ class QrCodeGenerator extends GetView<HomeController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                          onPressed: () async {
-                            var isGranted = await Permission
-                                .manageExternalStorage
-                                .request();
-                            if (isGranted.isGranted || isGranted.isLimited) {
-                              var dir = (await getExternalStorageDirectory())
-                                      ?.path ??
+                      onPressed: () async {
+                        var isGranted =
+                            await Permission.manageExternalStorage.request();
+                        if (isGranted.isGranted || isGranted.isLimited) {
+                          var dir =
+                              (await getExternalStorageDirectory())?.path ??
                                   (await getApplicationDocumentsDirectory())
                                       .path; //getExternalStorageDirectory();
-                              controller.screenshotController.captureAndSave(
-                                  dir + r"\Skany",
-                                  // fileName:
-                                  //     "rr", //  "QR" + DateTime.now().toString() +".jpg",
-                                  pixelRatio: 4 / 3);
-                            } else {
-                              Get.snackbar("NO PERMISSION",
-                                  "Storage Permission Not Granted",
-                                  backgroundColor: Colors.red);
-                            }
-                          },
-                          icon: const Icon(Icons.download))
-                      .paddingOnly(right: 10.0)
+                          controller.screenshotController.captureAndSave(
+                              dir + r"\Skany",
+                              // fileName:
+                              //     "rr", //  "QR" + DateTime.now().toString() +".jpg",
+                              pixelRatio: 4 / 3);
+                        } else {
+                          Get.snackbar(
+                              "NO PERMISSION", "Storage Permission Not Granted",
+                              backgroundColor: Colors.red);
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.download,
+                        color: Colors.black54, //todo
+                      )).paddingOnly(right: 10.0)
                 ],
               )
             ]),

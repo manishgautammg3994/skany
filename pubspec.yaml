@@ -40,6 +40,8 @@ dependencies:
   get_it:
   qr_flutter: 
   flutter_barcode_scanner:
+  qrscan:
+  image_picker:
   url_launcher: 
   clipboard: 
   flutter_localizations:
@@ -49,8 +51,8 @@ dependencies:
   screenshot: 
   path_provider:
   image_gallery_saver:
-  share_plus: ^4.4.0
-  permission_handler: ^10.0.1
+  share_plus: 
+  permission_handler:
   
 
 dev_dependencies:
@@ -76,9 +78,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/.
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

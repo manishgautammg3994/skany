@@ -11,6 +11,7 @@ import 'core/config/translation/helper/l10n.dart';
 import 'core/config/translation/messages.dart';
 import 'core/config/translation/provider/locale_provider.dart';
 import 'core/service/servicelocator.dart';
+import 'dymmymain.dart';
 
 void main() async {
   await GetStorage.init();
@@ -80,9 +81,9 @@ class _MyAppState extends State<MyApp> {
       //     const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
       //   ],
       // ),
-      getPages: AppPages.routes,
-      initialRoute: AppPages.initial,
-
+      // getPages: AppPages.routes,
+      // initialRoute: AppPages.initial,
+home: MyAppz(),
       // localizationsDelegates: [ // TODO add yourselef if you can or leave it
       //    // AppLocalizations.delegate,
       //   GlobalMaterialLocalizations.delegate,
