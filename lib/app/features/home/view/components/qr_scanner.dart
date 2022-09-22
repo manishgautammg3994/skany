@@ -41,13 +41,13 @@ class QrCodeScanner extends GetView<HomeController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "[ Skany Result ]", //todo add in locale
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
+            // Text(
+            //   "[ Skany Result ]", //todo add in locale
+            //   style: TextStyle(
+            //       fontSize: 16,
+            //       color: Colors.black,
+            //       fontWeight: FontWeight.bold),
+            // ),
             SizedBox(
               height: 8,
             ),
@@ -65,7 +65,7 @@ class QrCodeScanner extends GetView<HomeController> {
                                 children: <Widget>[
                                   Icon(Icons.verified_user,
                                       size: 18, color: Colors.green),
-                                  Text(' Qrcode Result',
+                                  Text(' QR code Result',
                                       style: TextStyle(fontSize: 15)),
                                   Spacer(),
                                   // Icon(Icons.more_vert,
@@ -100,57 +100,57 @@ class QrCodeScanner extends GetView<HomeController> {
                                   Padding(
                                     padding: EdgeInsets.only(
                                         top: 7, left: 25, right: 25),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Expanded(
-                                          flex: 5,
-                                          child: GestureDetector(
-                                              child: Text(
-                                                'Clear',
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.blue),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                              onTap: () {
-                                                controller.qrCodeinput.value ==
-                                                    "";
-                                                controller.bytes = Uint8List(0);
-                                                controller
-                                                    .qrContentEditingcontroller
-                                                    .clear();
-                                                controller.qrCodeinput.value =
-                                                    "";
-                                              }),
-                                        ),
-                                        Text('|',
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.black26)),
-                                        Expanded(
-                                          flex: 5,
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              controller.saveToGallery();
-                                            },
-                                            child: Text(
-                                              (controller.bytes.isNotEmpty ||
-                                                      controller.qrCodeinput
-                                                              .value !=
-                                                          "")
-                                                  ? 'Save'
-                                                  : "",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.blue),
-                                              textAlign: TextAlign.right,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    // child: Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.spaceAround,
+                                    //   children: <Widget>[
+                                    //     Expanded(
+                                    //       flex: 5,
+                                    //       child: GestureDetector(
+                                    //           child: Text(
+                                    //             'Clear',
+                                    //             style: TextStyle(
+                                    //                 fontSize: 15,
+                                    //                 color: Colors.blue),
+                                    //             textAlign: TextAlign.left,
+                                    //           ),
+                                    //           onTap: () {
+                                    //             controller.qrCodeinput.value ==
+                                    //                 "";
+                                    //             controller.bytes = Uint8List(0);
+                                    //             controller
+                                    //                 .qrContentEditingcontroller
+                                    //                 .clear();
+                                    //             controller.qrCodeinput.value =
+                                    //                 "";
+                                    //           }),
+                                    //     ),
+                                    //     Text('|',
+                                    //         style: TextStyle(
+                                    //             fontSize: 15,
+                                    //             color: Colors.black26)),
+                                    //     Expanded(
+                                    //       flex: 5,
+                                    //       child: GestureDetector(
+                                    //         onTap: () async {
+                                    //           controller.saveToGallery();
+                                    //         },
+                                    //         child: Text(
+                                    //           (controller.bytes.isNotEmpty ||
+                                    //                   controller.qrCodeinput
+                                    //                           .value !=
+                                    //                       "")
+                                    //               ? 'Save'
+                                    //               : "",
+                                    //           style: TextStyle(
+                                    //               fontSize: 15,
+                                    //               color: Colors.blue),
+                                    //           textAlign: TextAlign.right,
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                   )
                                 ],
                               ),
