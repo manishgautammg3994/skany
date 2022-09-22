@@ -16,7 +16,7 @@ class HomeController extends GetxController {
   var qrCodeinput = "".obs;
   var scannedQrCode = "".obs;
   ScreenshotController screenshotController = ScreenshotController();
-  Uint8List bytes = Uint8List(0);
+  var bytes = Uint8List(0);
   @override
   void onInit() {
     // TODO: implement onInit
@@ -77,8 +77,10 @@ class HomeController extends GetxController {
 
   Future scanPhoto() async {
     await Permission.storage.request();
-    String barcode = await scanner.scanPhoto();
-    scannedQrCode.value = barcode;
+    try {
+      String barcode = await scanner.scanPhoto();
+      scannedQrCode.value = barcode;
+    } catch (e) {}
   }
 
   Future scan() async {

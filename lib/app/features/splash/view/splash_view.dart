@@ -22,7 +22,6 @@ class _SplashScreenState extends State<SplashScreen> {
       // Navigator.of(context)
       //     .pushReplacement(MaterialPageRoute(builder: (_) => HomePage()));
       Get.offAllNamed(Routes.home);
-    
     });
   }
 
@@ -35,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "images/iccon.jpg",
+              "assets/images/icon.jpg",
               height: 157,
             ),
             SizedBox(
@@ -50,4 +49,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
