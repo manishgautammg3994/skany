@@ -81,9 +81,9 @@ class _MyAppState extends State<MyApp> {
       //     const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
       //   ],
       // ),
-      // getPages: AppPages.routes,
-      // initialRoute: AppPages.initial,
-home: MyAppz(),
+      getPages: AppPages.routes,
+      initialRoute: AppPages.initial,
+// home: MyAppz(),
       // localizationsDelegates: [ // TODO add yourselef if you can or leave it
       //    // AppLocalizations.delegate,
       //   GlobalMaterialLocalizations.delegate,

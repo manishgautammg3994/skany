@@ -10,6 +10,11 @@ class QrCodeScanner extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       floatingActionButton: FloatingActionButton(
+          onPressed: () => controller.scanBytes(),
+          tooltip: 'Take a Photo',
+          child: const Icon(Icons.camera_alt),
+        ),
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         backgroundColor: Colors.white70,
@@ -48,10 +53,21 @@ class QrCodeScanner extends GetView<HomeController> {
             SizedBox(
               height: 45,
             ),
-            ButtonWidget(
-              color: Colors.white,
-              text: "Scan QR Code",
-              onClicked: () => controller.scanQR(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ButtonWidget(
+                  color: Colors.white,
+                  text: "Scan QR Code",
+                  onClicked: () => controller.scan(),
+                ),
+                Spacer(),
+                ButtonWidget(
+                  color: Colors.white,
+                  text: "Scan From File",
+                  onClicked: () => controller.scanPhoto(),
+                )
+              ],
             )
           ],
         ),
