@@ -10,12 +10,24 @@ import 'dart:math' as math;
 
 import 'package:skany/app/features/home/controller/home_controller.dart';
 
+import '../../../../../core/service/MenuController.dart';
+import '../../../../../core/service/servicelocator.dart';
+
 class QrCodeGenerator extends GetView<HomeController> {
+  static MenuController get menuController =>
+      ServiceLocator.get<MenuController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: menuController.scaffoldKey,
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         appBar: AppBar(
+          leading: Center(
+            child: IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () => menuController.controlMenu(),
+            ),
+          ),
           backgroundColor: Colors.white70,
           title: Text(
             "SKANY",

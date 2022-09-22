@@ -1,8 +1,11 @@
+library home_view;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'components/qr_generator.dart';
 import 'components/qr_scanner.dart';
+part 'components/widget/drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: _Drawer(),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

@@ -4,13 +4,18 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../../core/service/MenuController.dart';
+import '../../../../../core/service/servicelocator.dart';
 import '../../controller/home_controller.dart';
 import 'ButtonWidget.dart';
 
 class QrCodeScanner extends GetView<HomeController> {
+  static MenuController get menuController =>
+      ServiceLocator.get<MenuController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: menuController.scaffoldKey,
       floatingActionButton: FloatingActionButton(
         onPressed: () => controller.scanBytes(),
         tooltip: 'Take a Photo',
@@ -18,6 +23,12 @@ class QrCodeScanner extends GetView<HomeController> {
       ),
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        leading: Center(
+          child: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () => menuController.controlMenu(),
+          ),
+        ),
         backgroundColor: Colors.white70,
         title: Text(
           "SKANY",
