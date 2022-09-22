@@ -10,6 +10,73 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+         <queries>
+  <!-- If your app opens https URLs -->
+  <intent>
+    <action android:name="android.intent.action.VIEW" />
+    <data android:scheme="https" />
+  </intent>
+  <intent>
+    <action android:name="android.intent.action.VIEW" />
+    <data android:scheme="http" />
+    <data android:mimeType="application/vnd.apple.mpegurl" />
+    <data android:mimeType="audio/x-mpgeurl" />
+    <data android:mimeType="audio/mpegurl"/>
+    <data android:mimeType="applicaion/x-mpegurl"/>
+  </intent>
+  <intent>
+    <action android:name="android.intent.action.VIEW" />
+    <data android:scheme="upi" />
+  </intent>
+  <!-- If your app makes calls -->
+  <intent>
+    <action android:name="android.intent.action.DIAL" />
+    <data android:scheme="tel" />
+  </intent>
+  <!-- If your sends SMS messages -->
+  <intent>
+    <action android:name="android.intent.action.SENDTO" />
+    <data android:scheme="smsto" />
+  </intent>
+  <!-- If your app sends emails -->
+  <intent>
+    <action android:name="android.intent.action.SEND" />
+    <data android:mimeType="*/*" />
+  </intent>
+  <!-- If your app opens http URLs -->
+  <intent>
+    <action android:name="android.intent.action.VIEW" />
+    <data android:mimeType="http" />
+  </intent>
+  <!-- If your app open dialer   -->
+  <intent>
+    <action android:name="android.intent.action.DIAL" />
+    <data android:mimeType="tel" />
+  </intent>
+  <intent>
+  <action android:name="android.intent.action.TTS_SERVICE" />
+</intent>
+<intent>
+  <action android:name="android.intent.action.SEND" />
+  <!-- Replace with the MIME type that your app works with, if needed. -->
+  <data android:mimeType="image/jpeg" />
+</intent>
+<intent>
+  <action android:name="android.intent.action.PROCESS_TEXT" />
+  <data android:mimeType="text/plain" />
+</intent>
+<intent>
+  <action android:name="android.accounts.AccountAuthenticator" />
+</intent>
+<!-- Allows the app to load an icon corresponding to the custom MIME type. -->
+<intent>
+  <action android:name="android.intent.action.VIEW" />
+  <data android:scheme="content" android:host="com.android.contacts"
+        android:mimeType="vnd.android.cursor.item/*" />
+</intent>
+
+
+</queries>
    <application
         android:requestLegacyExternalStorage="true"
         android:label="skany"

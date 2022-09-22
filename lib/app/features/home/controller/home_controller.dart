@@ -10,9 +10,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:path_provider/path_provider.dart' as syspaths;
 
 class HomeController extends GetxController {
   TextEditingController qrContentEditingcontroller = TextEditingController();
+  static String pattern =
+      r'^((?:.|\n)*?)((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?)';
+  RegExp regExp = RegExp(pattern);
 
   var qrCodeinput = "".obs;
   var scannedQrCode = "".obs;
@@ -113,6 +120,25 @@ class HomeController extends GetxController {
       await ImageGallerySaver.saveImage(bytes);
       String barcode = await scanner.scanBytes(bytes); // try catch needed
       scannedQrCode.value = barcode;
+    } catch (e) {}
+  }
+
+  Future<void> launchURL() async {
+    ///TODO privacy policy page
+    if (await canLaunchUrlString(scannedQrCode.value.toString().trim())) {
+      await launchUrlString(
+        scannedQrCode.value.toString().trim(),
+      ); //implement forceSafariVC for ios
+    }
+  }
+
+  Future shareGeneratedQr() async {
+    try {
+      final appDir = await syspaths.getTemporaryDirectory();
+      File file = File('${appDir.path}/${DateTime.now()}.jpg');
+      await file.writeAsBytes(bytes).then((value) {
+        Share.shareFiles([file.path.toString()]);
+      });
     } catch (e) {}
   }
 }
