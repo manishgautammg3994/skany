@@ -10,8 +10,7 @@ import '../../controller/home_controller.dart';
 import 'ButtonWidget.dart';
 
 class QrCodeScanner extends GetView<HomeController> {
-  static MenuController get menuController =>
-      ServiceLocator.get<MenuController>();
+  MenuController get menuController => ServiceLocator.get<MenuController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,15 +52,145 @@ class QrCodeScanner extends GetView<HomeController> {
               height: 8,
             ),
             Obx(
-              () => SelectableText(
-                onTap: () {}, //todo url launcher and regex
-                controller.scannedQrCode.value.toString(),
-                style: TextStyle(
-                    fontSize: 26,
-                    color: Colors.blueAccent,
-                    fontWeight: FontWeight.bold),
-              ),
+              () => (controller.scannedQrCode.value.length > 0)
+                  ? Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Card(
+                        elevation: 6,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: <Widget>[
+                                  Icon(Icons.verified_user,
+                                      size: 18, color: Colors.green),
+                                  Text(' Qrcode Result',
+                                      style: TextStyle(fontSize: 15)),
+                                  Spacer(),
+                                  // Icon(Icons.more_vert,
+                                  //     size: 18, color: Colors.black54),
+                                ],
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 9),
+                              decoration: BoxDecoration(
+                                color: Colors.black12,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(4),
+                                    topRight: Radius.circular(4)),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 40, right: 40, top: 30, bottom: 10),
+                              child: Column(
+                                children: <Widget>[
+                                  SingleChildScrollView(
+                                    child: SelectableText(
+                                      onTap:
+                                          () {}, //todo url launcher and regex
+                                      controller.scannedQrCode.value.toString(),
+                                      style: TextStyle(
+                                          fontSize: 26,
+                                          color: Colors.blueAccent,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 7, left: 25, right: 25),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 5,
+                                          child: GestureDetector(
+                                              child: Text(
+                                                'Clear',
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.blue),
+                                                textAlign: TextAlign.left,
+                                              ),
+                                              onTap: () {
+                                                controller.qrCodeinput.value ==
+                                                    "";
+                                                controller.bytes = Uint8List(0);
+                                                controller
+                                                    .qrContentEditingcontroller
+                                                    .clear();
+                                                controller.qrCodeinput.value =
+                                                    "";
+                                              }),
+                                        ),
+                                        Text('|',
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black26)),
+                                        Expanded(
+                                          flex: 5,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              controller.saveToGallery();
+                                            },
+                                            child: Text(
+                                              (controller.bytes.isNotEmpty ||
+                                                      controller.qrCodeinput
+                                                              .value !=
+                                                          "")
+                                                  ? 'Save'
+                                                  : "",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.blue),
+                                              textAlign: TextAlign.right,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Divider(height: 15, color: Colors.black26)
+
+                            // Container(
+                            //   child: Row(
+                            //     children: <Widget>[
+                            //       Icon(Icons.history,
+                            //           size: 16, color: Colors.black38),
+                            //       Text('  Generate History',
+                            //           style: TextStyle(
+                            //               fontSize: 14, color: Colors.black38)),
+                            //       Spacer(),
+                            //       Icon(Icons.chevron_right,
+                            //           size: 16, color: Colors.black38),
+                            //     ],
+                            //   ),
+                            //   padding: EdgeInsets.symmetric(
+                            //       horizontal: 10, vertical: 9),
+                            // )
+                          ],
+                        ),
+                      ),
+                    )
+                  : Container(),
             ),
+            // Obx(
+            //   () =>
+
+            //   // SelectableText(
+            //   //   onTap: () {}, //todo url launcher and regex
+            //   //   controller.scannedQrCode.value.toString(),
+            //   //   style: TextStyle(
+            //   //       fontSize: 26,
+            //   //       color: Colors.blueAccent,
+            //   //       fontWeight: FontWeight.bold),
+            //   // ),
+            // ),
             SizedBox(
               height: 10,
             ),

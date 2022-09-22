@@ -10,6 +10,9 @@ class _Drawer extends StatefulWidget {
 class __DrawerState extends State<_Drawer> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return SafeArea(
+        child: Container(
+      color: Colors.white70,
+    ));
   }
 }

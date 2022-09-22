@@ -14,166 +14,189 @@ import '../../../../../core/service/MenuController.dart';
 import '../../../../../core/service/servicelocator.dart';
 
 class QrCodeGenerator extends GetView<HomeController> {
-  static MenuController get menuController =>
-      ServiceLocator.get<MenuController>();
+  MenuController get menuController => ServiceLocator.get<MenuController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: menuController.scaffoldKey,
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        appBar: AppBar(
-          leading: Center(
-            child: IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () => menuController.controlMenu(),
+      key: menuController.scaffoldKey,
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        actions: [
+          Obx(() => (controller.qrCodeinput.value.length > 0)
+              ? Center(
+                  child: IconButton(
+                      icon: Icon(
+                        Icons.share,
+                        color: Colors.green,
+                      ),
+                      onPressed: () => controller.shareGeneratedQr()),
+                )
+              : Container())
+        ],
+        leading: Center(
+          child: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.green,
             ),
+            onPressed: () => menuController.controlMenu(),
           ),
-          backgroundColor: Colors.white70,
-          title: Text(
-            "SKANY",
-            style: TextStyle(color: Colors.black87, fontFamily: "Sofia"),
-          ),
-          centerTitle: true,
-          elevation: 0.0,
         ),
-        body: Center(
-            child: SingleChildScrollView(
-                child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Obx(() => (controller.qrCodeinput.value.length > 0)
-                ? Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Card(
-                      elevation: 6,
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Icon(Icons.verified_user,
-                                    size: 18, color: Colors.green),
-                                Text('  Generate Qrcode',
-                                    style: TextStyle(fontSize: 15)),
-                                Spacer(),
-                                // Icon(Icons.more_vert,
-                                //     size: 18, color: Colors.black54),
-                              ],
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 9),
-                            decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(4),
-                                  topRight: Radius.circular(4)),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: 40, right: 40, top: 30, bottom: 10),
-                            child: Column(
-                              children: <Widget>[
-                                Screenshot(
-                                  controller: controller.screenshotController,
-                                  child: SizedBox(
-                                    height: 190,
-                                    child: controller.bytes.isEmpty
-                                        ? Center(
-                                            child: Text('Empty code ... ',
-                                                style: TextStyle(
-                                                    color: Colors.black38)),
-                                          )
-                                        : Image.memory(controller.bytes),
-                                  ),
+        backgroundColor: Colors.white70,
+        title: Text(
+          "SKANY",
+          style: TextStyle(color: Colors.black87, fontFamily: "Sofia"),
+        ),
+        centerTitle: true,
+        elevation: 0.0,
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Obx(
+                () => (controller.qrCodeinput.value.length > 0)
+                    ? Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Card(
+                          elevation: 6,
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Icon(Icons.verified_user,
+                                        size: 18, color: Colors.green),
+                                    Text('  Generate Qrcode',
+                                        style: TextStyle(fontSize: 15)),
+                                    Spacer(),
+                                    // Icon(Icons.more_vert,
+                                    //     size: 18, color: Colors.black54),
+                                  ],
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 7, left: 25, right: 25),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Expanded(
-                                        flex: 5,
-                                        child: GestureDetector(
-                                            child: Text(
-                                              'Clear',
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 9),
+                                decoration: BoxDecoration(
+                                  color: Colors.black12,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(4),
+                                      topRight: Radius.circular(4)),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 40, right: 40, top: 30, bottom: 10),
+                                child: Column(
+                                  children: <Widget>[
+                                    Screenshot(
+                                      controller:
+                                          controller.screenshotController,
+                                      child: SizedBox(
+                                        height: 190,
+                                        child: controller.bytes.isEmpty
+                                            ? Center(
+                                                child: Text('Empty code ... ',
+                                                    style: TextStyle(
+                                                        color: Colors.black38)),
+                                              )
+                                            : Image.memory(controller.bytes),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 7, left: 25, right: 25),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          Expanded(
+                                            flex: 5,
+                                            child: GestureDetector(
+                                                child: Text(
+                                                  'Clear',
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.blue),
+                                                  textAlign: TextAlign.left,
+                                                ),
+                                                onTap: () {
+                                                  controller
+                                                          .qrCodeinput.value ==
+                                                      "";
+                                                  controller.bytes =
+                                                      Uint8List(0);
+                                                  controller
+                                                      .qrContentEditingcontroller
+                                                      .clear();
+                                                  controller.qrCodeinput.value =
+                                                      "";
+                                                }),
+                                          ),
+                                          Text('|',
                                               style: TextStyle(
                                                   fontSize: 15,
-                                                  color: Colors.blue),
-                                              textAlign: TextAlign.left,
+                                                  color: Colors.black26)),
+                                          Expanded(
+                                            flex: 5,
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                controller.saveToGallery();
+                                              },
+                                              child: Text(
+                                                (controller.bytes.isNotEmpty ||
+                                                        controller.qrCodeinput
+                                                                .value !=
+                                                            "")
+                                                    ? 'Save'
+                                                    : "",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.blue),
+                                                textAlign: TextAlign.right,
+                                              ),
                                             ),
-                                            onTap: () {
-                                              controller.qrCodeinput.value ==
-                                                  "";
-                                              controller.bytes = Uint8List(0);
-                                              controller
-                                                  .qrContentEditingcontroller
-                                                  .clear();
-                                              controller.qrCodeinput.value = "";
-                                            }),
-                                      ),
-                                      Text('|',
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.black26)),
-                                      Expanded(
-                                        flex: 5,
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            controller.saveToGallery();
-                                          },
-                                          child: Text(
-                                            (controller.bytes.isNotEmpty ||
-                                                    controller.qrCodeinput
-                                                            .value !=
-                                                        "")
-                                                ? 'Save'
-                                                : "",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.blue),
-                                            textAlign: TextAlign.right,
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Divider(height: 15, color: Colors.black26)
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Divider(height: 15, color: Colors.black26)
 
-                          // Container(
-                          //   child: Row(
-                          //     children: <Widget>[
-                          //       Icon(Icons.history,
-                          //           size: 16, color: Colors.black38),
-                          //       Text('  Generate History',
-                          //           style: TextStyle(
-                          //               fontSize: 14, color: Colors.black38)),
-                          //       Spacer(),
-                          //       Icon(Icons.chevron_right,
-                          //           size: 16, color: Colors.black38),
-                          //     ],
-                          //   ),
-                          //   padding: EdgeInsets.symmetric(
-                          //       horizontal: 10, vertical: 9),
-                          // )
-                        ],
-                      ),
-                    ),
-                  )
-                : Container()),
-            SizedBox(
-              height: 1,
-            ),
-            buildTextField(context),
-          ],
-        ))));
+                              // Container(
+                              //   child: Row(
+                              //     children: <Widget>[
+                              //       Icon(Icons.history,
+                              //           size: 16, color: Colors.black38),
+                              //       Text('  Generate History',
+                              //           style: TextStyle(
+                              //               fontSize: 14, color: Colors.black38)),
+                              //       Spacer(),
+                              //       Icon(Icons.chevron_right,
+                              //           size: 16, color: Colors.black38),
+                              //     ],
+                              //   ),
+                              //   padding: EdgeInsets.symmetric(
+                              //       horizontal: 10, vertical: 9),
+                              // )
+                            ],
+                          ),
+                        ),
+                      )
+                    : Container(),
+              ),
+              SizedBox(
+                height: 1,
+              ),
+              buildTextField(context),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   buildTextField(BuildContext context) {
