@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_second"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <FrameLayout
+            android:id="@+id/fl_my_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"></FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/scan_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal|top|center_vertical"
+        android:layout_marginTop="400dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_light" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:background="#6f6f6f"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:id="@+id/scan_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@mipmap/ic_back" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Skany"
+            android:textSize="30dp"
+            android:textColor="#fff"
+            tools:visibility="visible" />
+
+        <LinearLayout
+                android:id="@+id/choose_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:padding="15dp"
+                    android:src="@mipmap/ic_photo" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

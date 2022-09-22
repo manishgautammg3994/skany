@@ -4,7 +4,7 @@ import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+
 import 'package:screenshot/screenshot.dart';
 import 'dart:math' as math;
 

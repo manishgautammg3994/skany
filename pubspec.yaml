@@ -39,9 +39,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   get:
   get_it:
-  qr_flutter: 
-  flutter_barcode_scanner:
+  # qr_flutter: 
+  # flutter_barcode_scanner:
   qrscan:
+    path: qrscan/
   image_picker:
   url_launcher: 
   clipboard: 

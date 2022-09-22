@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,19 +41,6 @@ class HomeController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-  }
-
-  Future<void> scanQR() async {
-    try {
-      scannedQrCode.value = await FlutterBarcodeScanner.scanBarcode(
-        "#5fa693", //todo change
-        "cancel".tr,
-        true, //can change or dynamic
-        ScanMode.QR,
-      );
-    } on PlatformException {
-      scannedQrCode.value = "Failed to get QR".tr; //to add in language locale
-    }
   }
 
   _savedQR_Gallery(image) async {

@@ -19,7 +19,7 @@ class ButtonWidget extends StatelessWidget {
     return MaterialButton(
       child: Text(
         text,
-        style: TextStyle(fontSize: 23),
+        style: TextStyle(fontSize: 21),
       ),
       shape: StadiumBorder(),
       color: color,

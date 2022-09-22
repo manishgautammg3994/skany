@@ -3,6 +3,8 @@ library home_view;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/service/MenuController.dart';
+import '../../../../core/service/servicelocator.dart';
 import 'components/qr_generator.dart';
 import 'components/qr_scanner.dart';
 part 'components/widget/drawer.dart';
@@ -17,10 +19,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[QrCodeScanner(), QrCodeGenerator()];
+  MenuController get menuController => ServiceLocator.get<MenuController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: menuController.scaffoldKey,
       drawer: _Drawer(),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
