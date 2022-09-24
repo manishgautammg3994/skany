@@ -5,15 +5,16 @@ import 'package:get/get.dart';
 
 import '../../../../core/service/MenuController.dart';
 import '../../../../core/service/servicelocator.dart';
+import '../controller/intentlistener.dart';
 import 'components/qr_generator.dart';
 import 'components/qr_scanner.dart';
 part 'components/widget/drawer.dart';
 
 class HomePage extends StatefulWidget {
-  String? incomingText;
-  String? incomingImage;
+  // String? incomingText;
+  // String? incomingImage;
 
-  HomePage({Key? key, this.incomingText, this.incomingImage}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -23,21 +24,37 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[QrCodeScanner(), QrCodeGenerator()];
   MenuController get menuController => ServiceLocator.get<MenuController>();
+    IntentImage get intentImage => ServiceLocator.get<IntentImage>();
+  IntentText get intentText => ServiceLocator.get<IntentText>();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.incomingText != null && widget.incomingText != "") {
-      setState(() {
-        _selectedIndex = 1;
-      });
-    }
-    if (widget.incomingImage != null && widget.incomingImage != "") {
-      setState(() {
-        _selectedIndex = 0;
-      });
-    }
+     intentImage.imagePathStream.asBroadcastStream().listen((data) {
+      if (data != null && data != "") {
+        setState(() {
+          _selectedIndex = 0;
+        });
+      }
+    }, cancelOnError: false);
+    intentText.textStream.asBroadcastStream().listen((data) {
+      if (data != null && data != "") {
+        setState(() {
+          _selectedIndex = 1;
+        });
+      }
+    }, cancelOnError: false);
+    // if (widget.incomingText != null && widget.incomingText != "") {
+    //   setState(() {
+    //     _selectedIndex = 1;
+    //   });
+    // }
+    // if (widget.incomingImage != null && widget.incomingImage != "") {
+    //   setState(() {
+    //     _selectedIndex = 0;
+    //   });
+    // }
   }
 
   @override

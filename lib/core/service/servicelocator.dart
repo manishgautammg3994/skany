@@ -1,3 +1,4 @@
+import '../../app/features/home/controller/intentlistener.dart';
 import '../config/theme/helper/themeviewmodel.dart';
 import '../config/translation/provider/locale_provider.dart';
 
@@ -13,6 +14,8 @@ class ServiceLocator {
     getIt.registerSingleton<ThemeViewModel>(ThemeViewModel());
     getIt.registerSingleton<LocaleProvider>(LocaleProvider());
     getIt.registerSingleton<MenuController>(MenuController());
+       getIt.registerSingleton<IntentImage>(IntentImage());
+      getIt.registerSingleton<IntentText>(IntentText());
   }
 
   static T get<T extends Object>() {

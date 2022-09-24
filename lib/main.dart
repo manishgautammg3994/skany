@@ -9,6 +9,7 @@ import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import '/core/config/routes/app_pages.dart';
 
 import 'app/features/home/binding/home_binding.dart';
+import 'app/features/home/controller/intentlistener.dart';
 import 'app/features/home/view/home_view.dart';
 import 'core/config/theme/app_basic_theme.dart';
 import 'core/config/theme/helper/themeviewmodel.dart';
@@ -42,6 +43,8 @@ class _MyAppState extends State<MyApp> {
       ServiceLocator.get<ThemeViewModel>();
   static LocaleProvider get localeService =>
       ServiceLocator.get<LocaleProvider>();
+  IntentImage get intentImage => ServiceLocator.get<IntentImage>();
+  IntentText get intentText => ServiceLocator.get<IntentText>();
   // This widget is the root of your application. LocaleProvider
   @override
   void initState() {
@@ -60,13 +63,20 @@ class _MyAppState extends State<MyApp> {
     Future.delayed(Duration(seconds: 1)).then((value) {
       _intentDataStreamSubscription = ReceiveSharingIntent.getMediaStream()
           .listen((List<SharedMediaFile> value) {
-        if (value[0].path.trim() != "" ) {
-          Get.offAll(
-              () => HomePage(
-                    incomingImage: value[0].path.toString(),
-                  ),
-              arguments: {'incomingImage': value[0].path});
+        if (value[0].path.trim() != "") {
+          intentImage.incomingImageController.sink
+              .add(value[0].path.trim().toString());
+          // Get.offAll(
+          //     () => HomePage(incomingImage: value[0].path.trim().toString()),
+          //     arguments: {'incomingImage': value[0].path.trim().toString()});
         }
+        // if (value[0].path.trim() != "" ) {
+        //   Get.offAll(
+        //       () => HomePage(
+        //             incomingImage: value[0].path.toString(),
+        //           ),
+        //       arguments: {'incomingImage': value[0].path});
+        // }
       }, onError: (err) {
         print("getIntentDataStream error: $err");
       });
@@ -75,18 +85,32 @@ class _MyAppState extends State<MyApp> {
       ReceiveSharingIntent.getInitialMedia()
           .then((List<SharedMediaFile> value) {
         if (value[0].path.trim() != "") {
-          Get.offAll(() => HomePage(incomingImage: value[0].path.trim().toString()),
-              arguments: {'incomingImage': value[0].path.trim().toString()});
+          intentImage.incomingImageController.sink
+              .add(value[0].path.trim().toString());
+          // Get.offAll(
+          //     () => HomePage(
+          //           incomingImage: value[0].path.toString(),
+          //         ),
+          //     arguments: {'incomingImage': value[0].path});
         }
+        // if (value[0].path.trim() != "") {
+        //   Get.offAll(() => HomePage(incomingImage: value[0].path.trim().toString()),
+        //       arguments: {'incomingImage': value[0].path.trim().toString()});
+        // }
       });
 
       // For sharing or opening urls/text coming from outside the app while the app is in the memory
       _intentDataStreamSubscription =
           ReceiveSharingIntent.getTextStream().listen((String? value) {
         if (value != null && value != "") {
-          Get.offAll(() => HomePage(incomingText: value.toString()),
-              arguments: {'incomingText': value.toString()});
+          intentText.incomingTextController.sink.add(value.toString());
+          // Get.offAll(() => HomePage(incomingText: value.toString()),
+          //     arguments: {'incomingText': value.toString()});
         }
+        // if (value != null && value != "") {
+        //   Get.offAll(() => HomePage(incomingText: value.toString()),
+        //       arguments: {'incomingText': value.toString()});
+        // }
       }, onError: (err) {
         print("getLinkStream error: $err");
       });
@@ -94,9 +118,14 @@ class _MyAppState extends State<MyApp> {
       // For sharing or opening urls/text coming from outside the app while the app is closed
       ReceiveSharingIntent.getInitialText().then((String? value) {
         if (value != null && value != "") {
-          Get.offAll(() => HomePage(incomingText: value.toString()),
-              arguments: {'incomingText': value.toString()});
+          intentText.incomingTextController.sink.add(value.toString());
+          // Get.offAll(() => HomePage(incomingText: value.toString()),
+          //     arguments: {'incomingText': value.toString()});
         }
+        // if (value != null && value != "") {
+        //   Get.offAll(() => HomePage(incomingText: value.toString()),
+        //       arguments: {'incomingText': value.toString()});
+        // }
       });
     });
 

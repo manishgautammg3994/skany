@@ -15,6 +15,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 
+import '../../../../core/service/servicelocator.dart';
+import 'intentlistener.dart';
+
 class HomeController extends GetxController {
   TextEditingController qrContentEditingcontroller = TextEditingController();
 
@@ -26,29 +29,57 @@ class HomeController extends GetxController {
   var scannedQrCode = "".obs;
   ScreenshotController screenshotController = ScreenshotController();
   var bytes = Uint8List(0);
+  IntentImage get intentImage => ServiceLocator.get<IntentImage>();
+  IntentText get intentText => ServiceLocator.get<IntentText>();
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    intentImage.imagePathStream.asBroadcastStream().listen(
+      (data) {
+        if (data != null && data.trim() != "") {
+          //dont remove this trim()
+          scanPath(data);
+        }
+      },
+      cancelOnError: false,
+    );
+    intentText.textStream.asBroadcastStream().listen(
+      (data) {
+        if (data != null && data != "") {
+          qrCodeinput.value = data;
+          qrContentEditingcontroller.text = data;
+          generateBarCode(data);
+        }
+      },
+      cancelOnError: false,
+    );
   }
 
   @override
-  void onReady() {
-    // TODO: implement onReady
-     if (_getTextIntent() != null && _getFileIntent() != "") {
-      qrCodeinput.value = _getTextIntent().toString();
-      qrContentEditingcontroller.text = _getTextIntent().toString();
-      generateBarCode(_getTextIntent().toString());
-      update();
-    }
-    if (_getFileIntent() != null && _getFileIntent()?.trim() != "") {
-      //dont remove this trim()
-      scanPath(_getFileIntent()!.trim().toString());
-      update();
-    }
-    super.onReady();
-   
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    intentImage.incomingImageController.close();
+    intentText.incomingTextController.close();
   }
+  // @override
+  // void onReady() {
+  //   // TODO: implement onReady
+  //    if (_getTextIntent() != null && _getFileIntent() != "") {
+  //     qrCodeinput.value = _getTextIntent().toString();
+  //     qrContentEditingcontroller.text = _getTextIntent().toString();
+  //     generateBarCode(_getTextIntent().toString());
+  //     update();
+  //   }
+  //   if (_getFileIntent() != null && _getFileIntent()?.trim() != "") {
+  //     //dont remove this trim()
+  //     scanPath(_getFileIntent()!.trim().toString());
+  //     update();
+  //   }
+  //   super.onReady();
+
+  // }
 
   @override
   void onClose() {
@@ -61,21 +92,21 @@ class HomeController extends GetxController {
     print("File Saved to Gallery");
   }
 
-  String? _getTextIntent() {
-    try {
-      return Get.arguments['incomingText'];
-    } catch (_) {
-      return null;
-    }
-  }
+  // String? _getTextIntent() {
+  //   try {
+  //     return Get.arguments['incomingText'];
+  //   } catch (_) {
+  //     return null;
+  //   }
+  // }
 
-  String? _getFileIntent() {
-    try {
-      return Get.arguments['incomingImage'];
-    } catch (_) {
-      return null;
-    }
-  }
+  // String? _getFileIntent() {
+  //   try {
+  //     return Get.arguments['incomingImage'];
+  //   } catch (_) {
+  //     return null;
+  //   }
+  // }
 
   Future generateBarCode(String inputCode) async {
     if (inputCode.isNotEmpty) {
