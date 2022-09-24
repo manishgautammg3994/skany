@@ -7,9 +7,16 @@ import '../../../../../../core/service/MenuController.dart';
 import '../../../../../../core/service/servicelocator.dart';
 import '../../../controller/home_controller.dart';
 
-class MyHeaderDrawer extends GetView<HomeController> {
+class MyHeaderDrawer extends StatefulWidget {
   MyHeaderDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<MyHeaderDrawer> createState() => _MyHeaderDrawerState();
+}
+
+class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
   ThemeViewModel get isDarkMode => ServiceLocator.get<ThemeViewModel>();
+
   MenuController get menuController => ServiceLocator.get<MenuController>();
 
   @override
@@ -33,8 +40,8 @@ class MyHeaderDrawer extends GetView<HomeController> {
                 icon: Icon(Icons.arrow_back, color: Colors.white, size: 35),
               ),
             ),
-            Positioned(top: -15, left: 10, child: LanguageWidget()),
-            Positioned(top: -15, left: 20, child: LanguagePickerWidget()),
+            // Positioned(top: -15, left: 10, child: LanguageWidget()),
+            Positioned(top: -15, right: 10, child: LanguagePickerWidget()),
             Positioned(
               top: -10,
               right: 0,
@@ -42,7 +49,9 @@ class MyHeaderDrawer extends GetView<HomeController> {
                 hoverColor: Colors.grey,
                 onPressed: () {
                   {
-                    isDarkMode.darkMode = !isDarkMode.darkMode;
+                    setState(() {
+                      isDarkMode.darkMode = !isDarkMode.darkMode;
+                    });
                   }
                 },
                 icon: Icon(
