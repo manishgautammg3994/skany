@@ -72,7 +72,7 @@ class QrCodeScanner extends GetView<HomeController> {
                           ),
                         ))
                     : Container(),
-              ),
+              ).paddingOnly(bottom: 290),//dynamic this todo
               // Obx(
               //   () =>
 
