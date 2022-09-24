@@ -20,6 +20,9 @@ else
 
 A new Flutter project.
 
+
+to modify colors , launch button ,translations,alignment and drawer all features
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

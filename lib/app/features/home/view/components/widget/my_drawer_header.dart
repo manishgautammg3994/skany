@@ -73,7 +73,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     image: DecorationImage(
-                      image: Image.asset("assets/images/icon.jpg").image, //TODO
+                      image: Image.asset("assets/images/icon.png").image, //TODO
                     ),
                   ),
                 ),
