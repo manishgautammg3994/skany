@@ -70,8 +70,10 @@ class QrCodeScanner extends GetView<HomeController> {
                               style: const TextStyle(fontSize: 20),
                             ),
                           ),
-                        )).paddingOnly(top: 8, left: 3, right: 3)
-                    : Container(),
+                        )).paddingOnly(left: 3, right: 3, top: 5)
+                    : Container(
+                        height: 150,
+                      ),
               ), //dynamic this todo
               // Obx(
               //   () =>
@@ -90,7 +92,7 @@ class QrCodeScanner extends GetView<HomeController> {
               ),
               buttonGroup(),
               SizedBox(
-                height: 2,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,13 +129,13 @@ class QrCodeScanner extends GetView<HomeController> {
             Expanded(
               flex: 1,
               child: SizedBox(
-                height: 100,
+                height: 90,
                 child: InkWell(
                   onTap: () {
                     Clipboard.setData(ClipboardData(
                             text: controller.scannedQrCode.value.toString()))
                         .then((_) {
-                      Get.snackbar("Copy Success", "Copied to clipboard",
+                      Get.snackbar("Copy Success", "Copied To Clipboard",
                           snackPosition: SnackPosition.BOTTOM,
                           backgroundColor: Colors.green);
                     });
@@ -156,7 +158,7 @@ class QrCodeScanner extends GetView<HomeController> {
             Expanded(
               flex: 1,
               child: SizedBox(
-                height: 100,
+                height: 90,
                 child: InkWell(
                   onTap: () async {
                     controller.launchURL();
@@ -186,7 +188,7 @@ class QrCodeScanner extends GetView<HomeController> {
             Expanded(
               flex: 1,
               child: SizedBox(
-                height: 100,
+                height: 90,
                 child: InkWell(
                   onTap: () {
                     Share.share(controller.scannedQrCode.value.toString());
