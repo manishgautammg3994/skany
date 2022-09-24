@@ -163,12 +163,8 @@ class HomeController extends GetxController {
   }
 
   Future<void> launchURL() async {
-    ///TODO privacy policy page
-    if (await canLaunchUrlString(scannedQrCode.value.toString().trim())) {
-      await launchUrlString(
-        scannedQrCode.value.toString().trim(),
-      ); //implement forceSafariVC for ios
-    }
+  
+   
   }
 
   Future shareGeneratedQr() async {

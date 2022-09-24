@@ -1,13 +1,16 @@
 library home_view;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/service/MenuController.dart';
 import '../../../../core/service/servicelocator.dart';
+import '../controller/home_controller.dart';
 import '../controller/intentlistener.dart';
 import 'components/qr_generator.dart';
 import 'components/qr_scanner.dart';
+import 'components/widget/my_drawer_header.dart';
 part 'components/widget/drawer.dart';
 
 class HomePage extends StatefulWidget {
