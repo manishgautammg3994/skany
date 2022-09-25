@@ -36,11 +36,11 @@ Widget myDrawerList(BuildContext context) {
     ),
     child: Column(
       children: [
-        menuItem3(),
         menuItem4(),
         menuItem5(),
         menuItem6(),
         menuItem7(), //mkohlakalilucas7@gmail.com
+        menuItem3(),
         Divider(),
         Divider(
           color: Colors.red[100],
@@ -82,7 +82,7 @@ Widget menuItem3() {
           children: [
             Expanded(
               child: Icon(
-                Icons.dashboard_outlined,
+                Icons.assignment_ind,
                 size: 20,
                 color: Colors.black,
               ),
@@ -90,7 +90,7 @@ Widget menuItem3() {
             Expanded(
               flex: 3,
               child: Text(
-                "Dashboard",
+                "About Us",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,

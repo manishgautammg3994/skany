@@ -27,14 +27,14 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[QrCodeScanner(), QrCodeGenerator()];
   MenuController get menuController => ServiceLocator.get<MenuController>();
-    IntentImage get intentImage => ServiceLocator.get<IntentImage>();
+  IntentImage get intentImage => ServiceLocator.get<IntentImage>();
   IntentText get intentText => ServiceLocator.get<IntentText>();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-     intentImage.imagePathStream.asBroadcastStream().listen((data) {
+    intentImage.imagePathStream.asBroadcastStream().listen((data) {
       if (data != null && data != "") {
         setState(() {
           _selectedIndex = 0;
@@ -78,11 +78,11 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.qr_code_scanner),
-            label: ("scan_QR_code".tr),
+            label: ("Scan QR Code"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.qr_code),
-            label: ("create_Qr_code".tr),
+            label: ("Create QR Code"),
           )
         ],
         type: BottomNavigationBarType.fixed,

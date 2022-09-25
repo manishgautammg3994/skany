@@ -1,11 +1,11 @@
-Map<String, String> de = {
-  "dark_mode": "Dark mode",
-  "language": "Language",
-  "services": "Services",
-  "scan_QR_code": "Scan QR Code",
-  "create_Qr_code": " Create QR Code",
-  "enter_data": "Enter Data",
-  "cancel": "Cancel",
-  "Failed to get QR": "Failed to get QR",
-  "save": "Save"
-};
+// Map<String, String> de = {
+//   "dark_mode": "Dark mode",
+//   "language": "Language",
+//   "services": "Services",
+//   "scan_QR_code": "Scan QR Code",
+//   "create_Qr_code": " Create QR Code",
+//   "enter_data": "Enter Data",
+//   "cancel": "Cancel",
+//   "Failed to get QR": "Failed to get QR",
+//   "save": "Save"
+// };

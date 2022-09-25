@@ -41,7 +41,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
               ),
             ),
             // Positioned(top: -15, left: 10, child: LanguageWidget()),
-            Positioned(top: -15, right: 10, child: LanguagePickerWidget()),
+            // Positioned(top: -15, right: 10, child: LanguagePickerWidget()),
             Positioned(
               top: -10,
               right: 0,

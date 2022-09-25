@@ -12,7 +12,7 @@ class ServiceLocator {
   //or use GetxService for better response
   static init() {
     getIt.registerSingleton<ThemeViewModel>(ThemeViewModel());
-    getIt.registerSingleton<LocaleProvider>(LocaleProvider());
+    // getIt.registerSingleton<LocaleProvider>(LocaleProvider());
     getIt.registerSingleton<MenuController>(MenuController());
        getIt.registerSingleton<IntentImage>(IntentImage());
       getIt.registerSingleton<IntentText>(IntentText());

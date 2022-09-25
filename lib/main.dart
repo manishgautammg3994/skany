@@ -41,8 +41,8 @@ class _MyAppState extends State<MyApp> {
   String? _sharedText;
   static ThemeViewModel get themeService =>
       ServiceLocator.get<ThemeViewModel>();
-  static LocaleProvider get localeService =>
-      ServiceLocator.get<LocaleProvider>();
+  // static LocaleProvider get localeService =>
+  //     ServiceLocator.get<LocaleProvider>();
   IntentImage get intentImage => ServiceLocator.get<IntentImage>();
   IntentText get intentText => ServiceLocator.get<IntentText>();
   // This widget is the root of your application. LocaleProvider
@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
     if (themeService.isAutomatic) {
       themeService.selectThemeAutomatic();
     }
-    localeService.onlyFirstTime_oninit();
+    // localeService.onlyFirstTime_oninit();
     // if (localeService.isAutomatic) {
     //   localeService.selectLocaleAutomatic();
     // }
@@ -147,10 +147,10 @@ class _MyAppState extends State<MyApp> {
       theme: AppBasicTheme.getThemeDataLight(),
       darkTheme: AppBasicTheme.getThemeDataDark(),
       themeMode: themeService.theme,
-      translations: Messages(),
-      locale: Locale(localeService.locale),
-      supportedLocales: L10n.all,
-      fallbackLocale: const Locale('en'),
+      // translations: Messages(),
+      // locale: Locale(localeService.locale),
+      // supportedLocales: L10n.all,
+      // fallbackLocale: const Locale('en'),
       routingCallback: (route) {
         debugPrint(route?.previous.toString());
         debugPrint(route?.current.toString());

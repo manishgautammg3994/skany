@@ -19,6 +19,7 @@ import '../../../../core/service/servicelocator.dart';
 import 'intentlistener.dart';
 
 class HomeController extends GetxController {
+  var wifiPattern = "(WIFI:S:)(.{1,32})(;T:)(WPA|WEP)(;P:)(.{1,32})(;;)";
   TextEditingController qrContentEditingcontroller = TextEditingController();
 
   static String pattern =
@@ -163,8 +164,21 @@ class HomeController extends GetxController {
   }
 
   Future<void> launchURL() async {
-  
-   
+    if (regExp.hasMatch(scannedQrCode.value)) {
+      //launc url
+      Future<void> locate() async {
+        var url = Uri.parse(scannedQrCode.toString());
+        if (await canLaunchUrl(url)) {
+          await launchUrl(
+            url,
+          ); //implement forceSafariVC for ios
+        }
+      }
+    }
+    // else if() {
+
+    // } else if(){}
+    // else {}
   }
 
   Future shareGeneratedQr() async {
