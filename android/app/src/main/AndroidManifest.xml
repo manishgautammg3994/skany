@@ -19,10 +19,10 @@
   <intent>
     <action android:name="android.intent.action.VIEW" />
     <data android:scheme="http" />
-    <data android:mimeType="application/vnd.apple.mpegurl" />
+    <!-- <data android:mimeType="application/vnd.apple.mpegurl" />
     <data android:mimeType="audio/x-mpgeurl" />
     <data android:mimeType="audio/mpegurl"/>
-    <data android:mimeType="applicaion/x-mpegurl"/>
+    <data android:mimeType="applicaion/x-mpegurl"/> -->
   </intent>
   <intent>
     <action android:name="android.intent.action.VIEW" />
@@ -37,6 +37,10 @@
   <intent>
     <action android:name="android.intent.action.SENDTO" />
     <data android:scheme="smsto" />
+  </intent>
+   <intent>
+    <action android:name="android.intent.action.SENDTO" />
+    <data android:scheme="sms" />
   </intent>
   <!-- If your app sends emails -->
   <intent>

@@ -11,6 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:share_plus/share_plus.dart';
+import 'package:skany/app/features/home/controller/setcustomurl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
@@ -165,20 +166,21 @@ class HomeController extends GetxController {
 
   Future<void> launchURL() async {
     if (regExp.hasMatch(scannedQrCode.value)) {
+      await launch(url: scannedQrCode.value.toString());
       //launc url
-      Future<void> locate() async {
-        var url = Uri.parse(scannedQrCode.toString());
-        if (await canLaunchUrl(url)) {
-          await launchUrl(
-            url,
-          ); //implement forceSafariVC for ios
-        }
-      }
-    }
-    // else if() {
 
-    // } else if(){}
-    // else {}
+    } else if (scannedQrCode.value.startsWith("tel:")) {
+      launch(scheme: "tel:", url: scannedQrCode.value.toString());
+    } else if (scannedQrCode.value.startsWith("WIFI:")) {
+      //TODO
+    } else
+    // if()
+    {
+      String? pre = CustomUrl().customurl;
+      var newquery = scannedQrCode.replaceAll(" ", "+");
+      String fullUrl = pre ?? "" + newquery;
+      launch(url: fullUrl);
+    }
   }
 
   Future shareGeneratedQr() async {
@@ -189,5 +191,15 @@ class HomeController extends GetxController {
         Share.shareFiles([file.path.toString()]);
       });
     } catch (e) {}
+  }
+}
+
+Future<void> launch({String? scheme, String? url}) async {
+  var _url = Uri.parse(url!);
+  if (await canLaunchUrl(_url)) {
+    await launchUrl(_url,
+        mode: (scheme != null && scheme != "")
+            ? LaunchMode.platformDefault
+            : LaunchMode.externalApplication); //implement forceSafariVC for ios
   }
 }

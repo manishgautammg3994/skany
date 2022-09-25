@@ -10,7 +10,7 @@ abstract class AppBasicTheme {
     //for light theme
     return ThemeData(
       primarySwatch: Colors.green,
-      useMaterial3: false,
+      useMaterial3: true,
       textTheme: TextTheme(bodyText2: TextStyle(color: Colors.grey[800])),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,

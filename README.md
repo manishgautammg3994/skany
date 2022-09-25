@@ -35,3 +35,15 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+``` kotlin
+var wifiPattern = "(WIFI:S:)(.{1,32})(;T:)(WPA|WEP)(;P:)(.{1,32})(;;)".toRegex()
+if (wifiPattern.matches(value)){}
+
+// Parse
+val infoArr = wifiPattern.find(value)?.groups
+if (!infoArr.isNullOrEmpty() && infoArr.size == 8) {
+    val ssid = infoArr[2]
+    val password = infoArr[6]
+    val type = infoArr[4]
+}
+```
