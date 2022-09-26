@@ -149,52 +149,51 @@ Future<void> showWIFIDialog(
                             })
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        TextButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            child: Text("Cancel")),
-                        TextButton(
-                            onPressed: () async {
-                              String hiddenString = (isChecked)
-                                  ? "H:${isChecked.toString()};"
-                                  : "";
-                              if (formKey.currentState!.validate()) {
-                                if (selectedType == "WPA/WPA2PSK") {
-                                  finalStringwifi = "WIFI:T:WPA;" +
-                                      "P:" "${passCont.text.toString()}" +
-                                      ";S:" +
-                                      "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
-                                      ";" +
-                                      hiddenString;
-                                } else if (selectedType == "WEP") {
-                                  finalStringwifi = "WIFI:T:WEP;" +
-                                      "P:" "${passCont.text.toString()}" +
-                                      ";S:" +
-                                      "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
-                                      ";" +
-                                      hiddenString;
-                                } else if (selectedType == "None") {
-                                  finalStringwifi = "WIFI:T:nopass;" + //to modify
-                                      "P:" +
-                                      ";S:" +
-                                      "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
-                                      ";" +
-                                      hiddenString;
-                                }
-                                intentText.incomingTextController.sink
-                                    .add(finalStringwifi.toString());
-                                Get.back();
-                              }
-                            },
-                            child: Text("Get QR")),
-                      ],
-                    ).paddingOnly(left: 3, right: 3),
                   ]),
-                )
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Text("Cancel")),
+                    TextButton(
+                        onPressed: () async {
+                          String hiddenString =
+                              (isChecked) ? "H:${isChecked.toString()};" : "";
+                          if (formKey.currentState!.validate()) {
+                            if (selectedType == "WPA/WPA2PSK") {
+                              finalStringwifi = "WIFI:T:WPA;" +
+                                  "P:" "${passCont.text.toString()}" +
+                                  ";S:" +
+                                  "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
+                                  ";" +
+                                  hiddenString;
+                            } else if (selectedType == "WEP") {
+                              finalStringwifi = "WIFI:T:WEP;" +
+                                  "P:" "${passCont.text.toString()}" +
+                                  ";S:" +
+                                  "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
+                                  ";" +
+                                  hiddenString;
+                            } else if (selectedType == "None") {
+                              finalStringwifi = "WIFI:T:nopass;" + //to modify
+                                  "P:" +
+                                  ";S:" +
+                                  "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
+                                  ";" +
+                                  hiddenString;
+                            }
+                            intentText.incomingTextController.sink
+                                .add(finalStringwifi.toString());
+                            Get.back();
+                          }
+                        },
+                        child: Text("Get QR")),
+                  ],
+                ).paddingOnly(left: 3, right: 3),
               ],
             );
           },
