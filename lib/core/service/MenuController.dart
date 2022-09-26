@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class MenuController extends ChangeNotifier {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -14,7 +13,7 @@ class MenuController extends ChangeNotifier {
 
   void controlcloseMenu() {
     if (_scaffoldKey.currentState!.isDrawerOpen) {
-      Get.back();
+      _scaffoldKey.currentState!.closeDrawer();
     }
   }
 }

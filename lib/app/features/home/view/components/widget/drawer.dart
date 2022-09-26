@@ -18,7 +18,8 @@ class _Drawer extends GetView<HomeController> {
               myDrawerList(
                   context: context,
                   selections: selections,
-                  intentText: intentText)
+                  intentText: intentText,
+                  menuController: menuController)
             ],
           ),
         ),
@@ -41,7 +42,8 @@ class _Drawer extends GetView<HomeController> {
 Widget myDrawerList(
     {required BuildContext context,
     required List<bool> selections,
-    required IntentText intentText}) {
+    required IntentText intentText,
+    required MenuController menuController}) {
   return Container(
     padding: EdgeInsets.only(
       top: 15,
@@ -49,7 +51,10 @@ Widget myDrawerList(
     child: Column(
       children: [
         menuItem1(
-            selections: selections, intentText: intentText, context: context),
+            selections: selections,
+            intentText: intentText,
+            context: context,
+            menuController: menuController),
         menuItem4(),
         menuItem5(),
         menuItem6(),
@@ -89,16 +94,19 @@ Widget myDrawerList(
 Widget menuItem1(
     {required List<bool> selections,
     required BuildContext context,
-    required IntentText intentText}) {
+    required IntentText intentText,
+    required MenuController menuController}) {
   return Material(
     child: InkWell(
       onTap: () {},
       child: Padding(
           padding: EdgeInsets.zero,
           child: ToggleButtons(
-            onPressed: (index)async{
+            onPressed: (index) async {
+              //////////
+              menuController.controlcloseMenu();
               if (index == 0) {
-               await  showWIFIDialog(context: context, intentText: intentText);
+                await showWIFIDialog(context: context, intentText: intentText);
               }
             },
             isSelected: selections,
