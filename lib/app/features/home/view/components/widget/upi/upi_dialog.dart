@@ -1,8 +1,7 @@
 // import 'package:flutter/material.dart';
-// import 'package:skany/app/features/home/view/components/widget/upi/threescreen/dynamic.dart';
-// import 'package:skany/app/features/home/view/components/widget/upi/threescreen/merchant.dart';
-// import 'package:skany/app/features/home/view/components/widget/upi/threescreen/non_merchant.dart';
+// import 'package:get/get.dart';
 
+// import '../../../../../../../core/service/servicelocator.dart';
 // import '../../../../controller/intentlistener.dart';
 
 // Future<void> showUPIDialog(
@@ -11,71 +10,192 @@
 //   return await showDialog(
 //       context: context,
 //       builder: (context) {
+//         bool isChecked = false;
 //         // var space
+//         bool isPasswFieldVisible = true;
+//         TextEditingController upiController = TextEditingController();
+//         TextEditingController passCont = TextEditingController();
+//         String selectedType = "WPA/WPA2PSK";
+//         String? finalStringwifi;
 //         return StatefulBuilder(
-//           builder: (
-//             BuildContext context,
-//             setState,
-//           ) {
-//             int tabNo = 0;
-
-//             List<Widget> tabs = const [
-//               //create your own list as such and assign to tabs:tabs
-//               Tab(
-//                 text: 'Non Merchant',
+//           builder: (BuildContext context, setState) {
+//             return SimpleDialog(
+//               title: Row(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [Text("Generate UPI QR")],
 //               ),
-//               Tab(
-//                 text: 'Merchant',
-//               ),
-//               Tab(
-//                 text: 'Dynamic',
-//               ),
-//             ];
-//             return AlertDialog(
-//               content: DefaultTabController(
-//                 length: tabs.length,
-//                 child: Column(
-//                   mainAxisSize: MainAxisSize.min,
-//                   children: [
-//                     TabBar(
-//                       tabs: tabs,
-//                       isScrollable: true,
-//                       // labelColor: Colors.redAccent,
-//                       // unselectedLabelColor: Colors.black,
-//                       indicatorSize: TabBarIndicatorSize.label,
-//                       // indicatorColor: Colors.redAccent,
-//                     ),
-//                     TabBarView(
-//                         controller: DefaultTabController.of(context),
-//                         children: [
-//                           NonMerchants(
-//                             onChanged: (value) {},
-//                           ),
-//                           Merchants(onChanged: (value) {},),
-//                           DynamicUPI(onChanged: (value) {},)
-//                         ] // widgets list children
+//               children: [
+//                 // TabBarView(children: ),
+//                 Form(
+//                   key: formKey,
+//                   child: TextFormField(
+//                     validator: ((value) {
+//                       if ((value == "" || value == null)) {
+//                         return "Please Enter a Valid UPI ID";
+//                       } else if(!value.contains("@")){
+//                         return "Prefer @ ";
+//                       }else {
+//                         return null;
+//                       }
+//                     }),
+//                     controller: upiController,
+//                     keyboardType: TextInputType.text,
+//                     decoration: InputDecoration(
+//                         hintText: "Enter SSID",
+//                         hintStyle: TextStyle(
+//                           color: Colors.black,
 //                         ),
-//                   ],
+//                         enabledBorder: OutlineInputBorder(
+//                           borderSide: BorderSide(
+//                             color: Get.theme.primaryColor,
+//                           ),
+//                         ),
+//                         focusedBorder: OutlineInputBorder(
+//                           borderSide: BorderSide(
+//                             color: Get.theme.primaryColor,
+//                           ),
+//                         ),
+//                         suffixIcon: (IconButton(
+//                             color: Color.fromARGB(255, 239, 16, 16),
+//                             icon: Icon(
+//                               Icons.cancel,
+//                             ),
+//                             onPressed: () {
+//                             upiController.clear();
+//                             }))),
+//                   ),
 //                 ),
-//               ),
-//               // Form(
-//               //     key: formKey,
-//               //     child: Column(
-//               //       mainAxisSize: MainAxisSize.min,
-//               //       children: [],
-//               //     )),
-//               actions: [
+//                 Form(
+//                   key: formKey ,
+//                   child: TextFormField(
+                    
+//                     controller: isPasswFieldVisible ? passCont : null,
+//                     keyboardType: TextInputType.text,
+//                     validator: ((value) {
+                     
+//                       //TODO
+//                     }),
+//                     decoration: InputDecoration(
+//                         hintText: "Enter Password",
+//                         hintStyle: TextStyle(
+//                           color: Colors.black,
+//                         ),
+//                         enabledBorder: OutlineInputBorder(
+//                           borderRadius: BorderRadius.circular(14),
+//                           borderSide: BorderSide(
+//                             color: Get.theme.primaryColor,
+//                           ),
+//                         ),
+//                         focusedBorder: OutlineInputBorder(
+//                           borderRadius: BorderRadius.circular(14),
+//                           borderSide: BorderSide(
+//                             color: Theme.of(context).primaryColor,
+//                           ),
+//                         ),
+//                         suffixIcon: (IconButton(
+//                             color: Color.fromARGB(255, 109, 107, 107),
+//                             icon: Icon(
+//                               Icons.cancel,
+//                             ),
+//                             onPressed: () {
+//                               passCont.clear();
+//                             }))),
+//                   ),
+//                 ),
+//                 DropdownButtonHideUnderline(
+//                   child: DropdownButton<String>(
+//                     value: selectedType,
+//                     onChanged: ((value) {
+//                       setState(() {
+//                         if (value == "None") {
+//                           isPasswFieldVisible = false;
+//                           selectedType = value!;
+//                         } else if (value == "WEP") {
+//                           isPasswFieldVisible = true;
+//                           selectedType = value!;
+//                         } else if (value == "WPA/WPA2PSK") {
+//                           isPasswFieldVisible = true;
+//                           selectedType = value!;
+//                         }
+//                       });
+//                     }),
+//                     items: typesWifi.map((type) {
+//                       //any function
+//                       return DropdownMenuItem(
+//                         value: type,
+//                         child: Center(
+//                           child: Text(type!),
+//                         ),
+//                       );
+//                     }).toList(),
+//                   ),
+//                 ),
 //                 Row(
-//                   mainAxisSize: MainAxisSize.min,
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: <Widget>[
-//                     TextButton(onPressed: onPressed, child: child),
-//                     TextButton(onPressed: onPressed, child: child),
+//                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                   children: [
+//                     Text("Hidden"),
+//                     Checkbox(
+//                         value: isChecked,
+//                         onChanged: (checked) {
+//                           setState((() {
+//                             isChecked = checked!;
+//                           }));
+//                         })
 //                   ],
 //                 ),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                   children: <Widget>[
+//                     TextButton(
+//                         onPressed: () {
+//                           Get.back();
+//                         },
+//                         child: Text("Cancel")),
+//                     TextButton(
+//                         onPressed: () async {
+//                           String hiddenString =
+//                               (isChecked) ? "H:${isChecked.toString()};" : "";
+//                           if (formKey.currentState!.validate()) {
+//                             if (selectedType == "WPA/WPA2PSK") {
+//                               finalStringwifi = "WIFI:T:WPA;" +
+//                                   "P:" "${passCont.text.toString()}" +
+//                                   ";S:" +
+//                                   "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
+//                                   ";" +
+//                                   hiddenString;
+//                             } else if (selectedType == "WEP") {
+//                               finalStringwifi = "WIFI:T:WEP;" +
+//                                   "P:" "${passCont.text.toString()}" +
+//                                   ";S:" +
+//                                   "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
+//                                   ";" +
+//                                   hiddenString;
+//                             } else if (selectedType == "None") {
+//                               finalStringwifi = "WIFI:T:nopass;" + //to modify
+//                                   "P:" +
+//                                   ";S:" +
+//                                   "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
+//                                   ";" +
+//                                   hiddenString;
+//                             }
+//                             intentText.incomingTextController.sink
+//                                 .add(finalStringwifi.toString());
+//                             Get.back();
+//                           }
+//                         },
+//                         child: Text("Get QR")),
+//                   ],
+//                 ).paddingOnly(left: 3, right: 3),
 //               ],
 //             );
 //           },
 //         );
 //       });
 // }
+
+// List<String?> typesWifi = [
+//   "None",
+//   "WEP",
+//   "WPA/WPA2PSK",
+// ];
+// //WIFI:    // S: ;  //T: ; //P: ; //H: ;        WEP|WPA|nopass //but in nopass youhave to pass P:;

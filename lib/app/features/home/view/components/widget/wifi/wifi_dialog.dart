@@ -67,7 +67,7 @@ Future<void> showWIFIDialog(
                     child: Form(
                       key: isPasswFieldVisible ? formKey : null,
                       child: TextFormField(
-                        key: isPasswFieldVisible ? formKey : null,
+             
                         controller: isPasswFieldVisible ? passCont : null,
                         keyboardType: TextInputType.text,
                         validator: ((value) {
