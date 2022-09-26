@@ -21,7 +21,6 @@ Future<void> showWIFIDialog(
           builder: (BuildContext context, setState) {
             return SimpleDialog(
               title: Row(
-                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [Text("Generate WIFI QR")],
               ),
@@ -153,7 +152,6 @@ Future<void> showWIFIDialog(
                       ],
                     )),
                 Row(
-                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     TextButton(
