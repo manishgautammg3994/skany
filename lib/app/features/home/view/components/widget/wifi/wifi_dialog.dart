@@ -20,6 +20,8 @@ Future<void> showWIFIDialog(
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
             return AlertDialog(
+              title: Row(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center,children: [Text("Generate WIFI QR")],),
+              scrollable: true,
               content: SingleChildScrollView(
                 child: Form(
                     key: formKey,

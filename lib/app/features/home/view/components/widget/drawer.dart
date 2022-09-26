@@ -94,11 +94,11 @@ Widget menuItem1(
     child: InkWell(
       onTap: () {},
       child: Padding(
-          padding: EdgeInsets.all(5.0),
+          padding: EdgeInsets.zero,
           child: ToggleButtons(
-            onPressed: (index) {
+            onPressed: (index)async{
               if (index == 0) {
-                showWIFIDialog(context: context, intentText: intentText);
+               await  showWIFIDialog(context: context, intentText: intentText);
               }
             },
             isSelected: selections,
