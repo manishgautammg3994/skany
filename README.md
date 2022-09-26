@@ -47,3 +47,70 @@ if (!infoArr.isNullOrEmpty() && infoArr.size == 8) {
     val type = infoArr[4]
 }
 ```
+```
+String UPI = "upi://pay?pa=" + payeeAddress + "&pn=" + payeeName
+            + "&tr=" + trxnRefId
+            + "&tn=" + trxnNote + "&am=" + payeeAmount + "&cu=" + currencyCode+ "&ad="+ str ;
+```
+ ```dart
+    // main.dart
+void main() {
+  const dummyString =
+      "Welcome to https://www.kindacode.com and learn new things. Contact us at https://www.kindacode.com/contact or via email. Happy coding and have a nice day!";
+
+  final RegExp exp = RegExp(r'(?:(?:https?):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
+  List<RegExpMatch> matches = exp.allMatches(dummyString).toList();
+
+  for (var match in matches) {
+    print(dummyString.substring(match.start, match.end));
+  }
+}
+    ```
+
+    ```
+    https://www.kindacode.com
+https://www.kindacode.com/contact
+    ```
+
+
+    ```
+    // main.dart
+void main() {
+  const input = "One two three four five six seven eight.";
+  const startWord = "two";
+  const endWord = "six";
+
+  final startIndex = input.indexOf(startWord);
+  final endIndex = input.indexOf(endWord, startIndex + startWord.length);
+
+  final String? output =
+      input.substring(startIndex + startWord.length, endIndex);
+  print(output);
+}
+```
+```
+three four five
+```
+```
+substring(int startIndex, [ int endIndex ])
+```
+```
+void main() { 
+   String str1 = "Hello World"; 
+   print("New String: ${str1.substring(6)}"); 
+   
+   // from index 6 to the last index 
+   print("New String: ${str1.substring(2,6)}"); 
+   
+   // from index 2 to the 6th index 
+} 
+```
+```
+New String: World 
+New String: llo 
+```
+
+
+
+```
+upi://pay?pa=8607573994@paytm&pn=MANISH&mc=0000&mode=02&purpose=00&orgid=159761

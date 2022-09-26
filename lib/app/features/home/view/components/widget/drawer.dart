@@ -1,7 +1,10 @@
 part of home_view;
 
 class _Drawer extends GetView<HomeController> {
-  const _Drawer({Key? key}) : super(key: key);
+  _Drawer({Key? key}) : super(key: key);
+  IntentText get intentText => ServiceLocator.get<IntentText>();
+  MenuController get menuController => ServiceLocator.get<MenuController>();
+  List<bool> selections = List.generate(1, (index) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +13,13 @@ class _Drawer extends GetView<HomeController> {
         //done
         child: Container(
           child: Column(
-            children: [MyHeaderDrawer(), myDrawerList(context)],
+            children: [
+              MyHeaderDrawer(),
+              myDrawerList(
+                  context: context,
+                  selections: selections,
+                  intentText: intentText)
+            ],
           ),
         ),
       ),
@@ -29,13 +38,18 @@ class _Drawer extends GetView<HomeController> {
   }
 }
 
-Widget myDrawerList(BuildContext context) {
+Widget myDrawerList(
+    {required BuildContext context,
+    required List<bool> selections,
+    required IntentText intentText}) {
   return Container(
     padding: EdgeInsets.only(
       top: 15,
     ),
     child: Column(
       children: [
+        menuItem1(
+            selections: selections, intentText: intentText, context: context),
         menuItem4(),
         menuItem5(),
         menuItem6(),
@@ -68,6 +82,30 @@ Widget myDrawerList(BuildContext context) {
         // menuItem17(),
       ],
       //show the list of menu drawer
+    ),
+  );
+}
+
+Widget menuItem1(
+    {required List<bool> selections,
+    required BuildContext context,
+    required IntentText intentText}) {
+  return Material(
+    child: InkWell(
+      onTap: () {},
+      child: Padding(
+          padding: EdgeInsets.all(5.0),
+          child: ToggleButtons(
+            onPressed: (index) {
+              if (index == 0) {
+                showWIFIDialog(context: context, intentText: intentText);
+              }
+            },
+            isSelected: selections,
+            children: [
+              Icon(Icons.wifi),
+            ],
+          )),
     ),
   );
 }
@@ -459,38 +497,6 @@ Widget menuItem14() {
 }
 
 Widget menuItem15() {
-  return Material(
-    child: InkWell(
-      onTap: () {},
-      child: Padding(
-        padding: EdgeInsets.all(15.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: Icon(
-                Icons.dashboard_outlined,
-                size: 20,
-                color: Colors.black,
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                "Dashboard",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-Widget menuItem16() {
   return Material(
     child: InkWell(
       onTap: () {},

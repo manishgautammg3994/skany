@@ -170,16 +170,18 @@ class HomeController extends GetxController {
       //launc url
 
     } else if (scannedQrCode.value.startsWith("tel:")) {
-      launch(scheme: "tel:", url: scannedQrCode.value.toString());
+     await  launch(scheme: "tel:", url: scannedQrCode.value.toString());
     } else if (scannedQrCode.value.startsWith("WIFI:")) {
       //TODO
-    } else
+    } else if(scannedQrCode.value.startsWith("upi://")){
+       await launch(url: scannedQrCode.value.toString());
+    }
     // if()
     {
       String? pre = CustomUrl().customurl;
       var newquery = scannedQrCode.replaceAll(" ", "+");
-      String fullUrl = pre ?? "" + newquery;
-      launch(url: fullUrl);
+      String fullUrl = (pre != null && pre.toString() != "") ? pre+newquery :  newquery;
+      await launch(url: fullUrl);
     }
   }
 
