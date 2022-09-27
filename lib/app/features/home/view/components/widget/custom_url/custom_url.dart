@@ -17,10 +17,11 @@ Future<void> displayCustomURLTextInputDialog(BuildContext context) async {
           key: formKey,
           child: TextFormField(
             validator: (value) {
-              if (value == null ||
-                  value.trim() == "" ||
-                  (!value.contains("https://") || !value.contains("http://"))) {
+              if (value == null && value?.trim() == "") {
                 return "Not a valid URL";
+              } else if ((!value!.contains("https://") &&
+                  !value.contains("http://"))) {
+                return "http:// or http:// is required";
               } else {
                 return null;
               }
@@ -40,7 +41,6 @@ Future<void> displayCustomURLTextInputDialog(BuildContext context) async {
             child: Text('Set'),
             onPressed: () async {
               if (formKey.currentState!.validate()) {
-                formKey.currentState!.save();
                 custoURL.customurl = _textFieldController.text.trim();
 
                 Get.back();

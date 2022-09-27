@@ -21,7 +21,7 @@ Future showWIFIDialog(
       return StatefulBuilder(builder: (BuildContext context, setState) {
         return Container(
           child: AlertDialog(
-            scrollable: true,
+            scrollable: false,
             title: Text('WIFI QR'),
             content: Column(
               children: [
@@ -40,7 +40,7 @@ Future showWIFIDialog(
                   ),
                 ),
                 SizedBox(
-                  height: 3,
+                  height: 2,
                 ),
                 Visibility(
                   visible: isPasswFieldVisible,
@@ -87,9 +87,9 @@ Future showWIFIDialog(
                       );
                     }).toList(),
                   ),
-                ).paddingOnly(top: 3, bottom: 3),
+                ),
                 SizedBox(
-                  height: 3,
+                  height: 2,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -106,8 +106,6 @@ Future showWIFIDialog(
                 ),
               ],
             ),
-            actionsPadding: EdgeInsets.all(5),
-            actionsAlignment: MainAxisAlignment.spaceBetween,
             actionsOverflowButtonSpacing: 2.0,
             actions: <Widget>[
               TextButton(
@@ -121,9 +119,7 @@ Future showWIFIDialog(
                 onPressed: () async {
                   String hiddenString =
                       (isChecked) ? "H:${isChecked.toString()};" : "";
-
                   if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
                     if (selectedType == "WPA/WPA2PSK") {
                       finalStringwifi = "WIFI:T:WPA;" +
                           "P:" "${passCont.text.toString()}" +
