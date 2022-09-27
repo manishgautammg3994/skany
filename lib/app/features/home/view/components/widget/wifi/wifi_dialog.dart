@@ -24,7 +24,6 @@ Future showWIFIDialog(
             scrollable: true,
             title: Text('WIFI QR'),
             content: Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 Form(
                   key: formKey,
@@ -122,8 +121,9 @@ Future showWIFIDialog(
                 onPressed: () async {
                   String hiddenString =
                       (isChecked) ? "H:${isChecked.toString()};" : "";
-                  formKey.currentState!.save();
+
                   if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
                     if (selectedType == "WPA/WPA2PSK") {
                       finalStringwifi = "WIFI:T:WPA;" +
                           "P:" "${passCont.text.toString()}" +

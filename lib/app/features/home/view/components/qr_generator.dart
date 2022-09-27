@@ -204,6 +204,7 @@ class QrCodeGenerator extends GetView<HomeController> {
         padding: EdgeInsets.fromLTRB(19, 2, 19, 10),
         child: TextFormField(
           autocorrect: false,
+          // autovalidateMode: AutovalidateMode.always,
           toolbarOptions: ToolbarOptions(
               copy: true, paste: true, selectAll: true, cut: true),
           controller: controller.qrContentEditingcontroller,
@@ -212,6 +213,10 @@ class QrCodeGenerator extends GetView<HomeController> {
             controller.qrCodeinput.value = val;
             controller.generateBarCode(val);
           }),
+          onSaved: (val) async {
+            controller.qrCodeinput.value = val ?? "";
+            controller.generateBarCode(controller.qrCodeinput.value);
+          },
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
           decoration: InputDecoration(
@@ -236,6 +241,7 @@ class QrCodeGenerator extends GetView<HomeController> {
                   icon: Icon(Icons.done, size: 30),
                   onPressed: () {
                     FocusScope.of(context).unfocus();
+                    controller.generateBarCode(controller.qrCodeinput.value);
                   }))),
         ));
   }

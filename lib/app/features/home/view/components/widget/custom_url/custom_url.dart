@@ -5,16 +5,29 @@ import '../../../../controller/setcustomurl.dart';
 
 TextEditingController _textFieldController = TextEditingController();
 CustomUrl custoURL = CustomUrl();
+GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
 Future<void> displayCustomURLTextInputDialog(BuildContext context) async {
   return await showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text('TextField in Dialog'),
-        content: TextField(
-          controller: _textFieldController,
-          decoration: InputDecoration(hintText: "Set Your Custom URL"),
+        title: Text('Set Your Custom URL'),
+        content: Form(
+          key: formKey,
+          child: TextFormField(
+            validator: (value) {
+              if (value == null ||
+                  value.trim() == "" ||
+                  (!value.contains("https://") || !value.contains("http://"))) {
+                return "Not a valid URL";
+              } else {
+                return null;
+              }
+            },
+            controller: _textFieldController,
+            decoration: InputDecoration(hintText: "Set Your Custom URL"),
+          ),
         ),
         actions: <Widget>[
           TextButton(
@@ -25,10 +38,13 @@ Future<void> displayCustomURLTextInputDialog(BuildContext context) async {
           ),
           TextButton(
             child: Text('Set'),
-            onPressed: () {
-              custoURL.customurl = _textFieldController.text.trim();
+            onPressed: () async {
+              if (formKey.currentState!.validate()) {
+                formKey.currentState!.save();
+                custoURL.customurl = _textFieldController.text.trim();
 
-              Get.back();
+                Get.back();
+              }
             },
           ),
         ],

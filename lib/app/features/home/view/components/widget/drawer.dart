@@ -166,7 +166,8 @@ Widget menuItem4(
           child: TextField(
             enabled: false,
             controller: TextEditingController(text: custoURL.customurl),
-            decoration: InputDecoration(hintText: "Set Your Custom URL"),
+            decoration: InputDecoration(
+                hintText: "Set Your Custom URL", label: Text("Custom URL")),
           ),
         ),
       ),
