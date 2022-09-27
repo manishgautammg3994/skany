@@ -16,7 +16,8 @@ Future showWIFIDialog(
       TextEditingController passCont = TextEditingController();
       String selectedType = "WPA/WPA2PSK";
       String? finalStringwifi;
-      return StatefulBuilder(builder: (context, setState) {
+      
+      return StatefulBuilder(builder: (BuildContext context, setState) {
         return Container(
           child: AlertDialog(
             title: Text('WIFI QR'),
@@ -83,7 +84,7 @@ Future showWIFIDialog(
               TextButton(
                 child: Text('CANCEL'),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Get.back();
                 },
               ),
               TextButton(
@@ -109,7 +110,7 @@ Future showWIFIDialog(
                         "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
                         ";" +
                         hiddenString;
-                         intentText.incomingTextController.sink
+                    intentText.incomingTextController.sink
                         .add(finalStringwifi.toString());
                     Get.back();
                   } else if (selectedType == "None") {
@@ -119,7 +120,7 @@ Future showWIFIDialog(
                         "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
                         ";" +
                         hiddenString;
-                         intentText.incomingTextController.sink
+                    intentText.incomingTextController.sink
                         .add(finalStringwifi.toString());
                     Get.back();
                   }
