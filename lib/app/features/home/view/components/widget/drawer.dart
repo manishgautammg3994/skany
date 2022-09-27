@@ -158,14 +158,16 @@ Widget menuItem4(
       onTap: () {},
       child: Padding(
         padding: EdgeInsets.all(15.0),
-        child: TextField(
-          enabled: false,
+        child: InkWell(
           onTap: () async {
             menuController.controlcloseMenu();
             return await displayCustomURLTextInputDialog(context);
           },
-          controller: TextEditingController(text: custoURL.customurl),
-          decoration: InputDecoration(hintText: "Set Your Custom URL"),
+          child: TextField(
+            enabled: false,
+            controller: TextEditingController(text: custoURL.customurl),
+            decoration: InputDecoration(hintText: "Set Your Custom URL"),
+          ),
         ),
       ),
     ),

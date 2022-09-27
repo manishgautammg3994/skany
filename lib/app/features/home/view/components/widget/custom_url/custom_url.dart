@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../controller/setcustomurl.dart';
 
@@ -6,7 +7,7 @@ TextEditingController _textFieldController = TextEditingController();
 CustomUrl custoURL = CustomUrl();
 
 Future<void> displayCustomURLTextInputDialog(BuildContext context) async {
-  return showDialog(
+  return await showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
@@ -19,15 +20,15 @@ Future<void> displayCustomURLTextInputDialog(BuildContext context) async {
           TextButton(
             child: Text('CANCEL'),
             onPressed: () {
-              Navigator.pop(context);
+              Get.back();
             },
           ),
           TextButton(
             child: Text('Set'),
             onPressed: () {
               custoURL.customurl = _textFieldController.text.trim();
-              print(_textFieldController.text);
-              Navigator.pop(context);
+
+              Get.back();
             },
           ),
         ],
