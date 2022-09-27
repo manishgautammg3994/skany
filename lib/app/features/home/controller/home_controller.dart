@@ -180,7 +180,7 @@ class HomeController extends GetxController {
         _url,
       );
     }
-    if (scannedQrCode.value.startsWith("BEGIN:VARD") &&
+    if (scannedQrCode.value.startsWith("BEGIN:VCARD") &&
         scannedQrCode.value.endsWith("END:VCARD")) {
       if (await FlutterContacts.requestPermission()) {
         Contact.fromVCard(scannedQrCode.value.toString());
