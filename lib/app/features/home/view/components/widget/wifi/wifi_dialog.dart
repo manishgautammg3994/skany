@@ -22,7 +22,7 @@ Future showWIFIDialog(
           child: AlertDialog(
             title: Text('WIFI QR'),
             content: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextField(
                   controller: ssidCont,
@@ -34,7 +34,7 @@ Future showWIFIDialog(
                     controller: passCont,
                     decoration: InputDecoration(hintText: "Enter Password"),
                   ),
-                ),
+                ).paddingOnly(top: 2, bottom: 2),
                 DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: selectedType,
@@ -62,7 +62,7 @@ Future showWIFIDialog(
                       );
                     }).toList(),
                   ),
-                ),
+                ).paddingOnly(top: 2, bottom: 2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -75,7 +75,7 @@ Future showWIFIDialog(
                           }));
                         })
                   ],
-                ),
+                ).paddingOnly(top: 2, bottom: 2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -90,10 +90,10 @@ Future showWIFIDialog(
                       onPressed: () async {
                         String hiddenString =
                             (isChecked) ? "H:${isChecked.toString()};" : "";
-                        if (passCont.text.length > 7 &&
-                            (ssidCont.text.length > 0 &&
-                                ssidCont.text != null)) {
-                          if (selectedType == "WPA/WPA2PSK") {
+                        if ((ssidCont.text.length > 0 &&
+                            ssidCont.text != null)) {
+                          if (selectedType == "WPA/WPA2PSK" &&
+                              passCont.text.length > 7) {
                             finalStringwifi = "WIFI:T:WPA;" +
                                 "P:" "${passCont.text.toString()}" +
                                 ";S:" +
@@ -103,7 +103,8 @@ Future showWIFIDialog(
                             intentText.incomingTextController.sink
                                 .add(finalStringwifi.toString());
                             Get.back();
-                          } else if (selectedType == "WEP") {
+                          } else if (selectedType == "WEP" &&
+                              passCont.text.length > 7) {
                             finalStringwifi = "WIFI:T:WEP;" +
                                 "P:" "${passCont.text.toString()}" +
                                 ";S:" +
@@ -128,7 +129,7 @@ Future showWIFIDialog(
                       },
                     ),
                   ],
-                )
+                ).paddingOnly(top: 2, bottom: 2)
               ],
             ),
           ),
