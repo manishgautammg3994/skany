@@ -90,37 +90,40 @@ Future showWIFIDialog(
                       onPressed: () async {
                         String hiddenString =
                             (isChecked) ? "H:${isChecked.toString()};" : "";
-
-                        if (selectedType == "WPA/WPA2PSK") {
-                          finalStringwifi = "WIFI:T:WPA;" +
-                              "P:" "${passCont.text.toString()}" +
-                              ";S:" +
-                              "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
-                              ";" +
-                              hiddenString;
-                          intentText.incomingTextController.sink
-                              .add(finalStringwifi.toString());
-                          Get.back();
-                        } else if (selectedType == "WEP") {
-                          finalStringwifi = "WIFI:T:WEP;" +
-                              "P:" "${passCont.text.toString()}" +
-                              ";S:" +
-                              "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
-                              ";" +
-                              hiddenString;
-                          intentText.incomingTextController.sink
-                              .add(finalStringwifi.toString());
-                          Get.back();
-                        } else if (selectedType == "None") {
-                          finalStringwifi = "WIFI:T:nopass;" + //to modify
-                              "P:" +
-                              ";S:" +
-                              "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
-                              ";" +
-                              hiddenString;
-                          intentText.incomingTextController.sink
-                              .add(finalStringwifi.toString());
-                          Get.back();
+                        if (passCont.text.length > 7 &&
+                            (ssidCont.text.length > 0 &&
+                                ssidCont.text != null)) {
+                          if (selectedType == "WPA/WPA2PSK") {
+                            finalStringwifi = "WIFI:T:WPA;" +
+                                "P:" "${passCont.text.toString()}" +
+                                ";S:" +
+                                "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
+                                ";" +
+                                hiddenString;
+                            intentText.incomingTextController.sink
+                                .add(finalStringwifi.toString());
+                            Get.back();
+                          } else if (selectedType == "WEP") {
+                            finalStringwifi = "WIFI:T:WEP;" +
+                                "P:" "${passCont.text.toString()}" +
+                                ";S:" +
+                                "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
+                                ";" +
+                                hiddenString;
+                            intentText.incomingTextController.sink
+                                .add(finalStringwifi.toString());
+                            Get.back();
+                          } else if (selectedType == "None") {
+                            finalStringwifi = "WIFI:T:nopass;" + //to modify
+                                "P:" +
+                                ";S:" +
+                                "${ssidCont.text.toString()}" + //REMOVE THESE EXTRA ""
+                                ";" +
+                                hiddenString;
+                            intentText.incomingTextController.sink
+                                .add(finalStringwifi.toString());
+                            Get.back();
+                          }
                         }
                       },
                     ),
