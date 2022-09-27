@@ -4,7 +4,7 @@ class _Drawer extends GetView<HomeController> {
   _Drawer({Key? key}) : super(key: key);
   IntentText get intentText => ServiceLocator.get<IntentText>();
   MenuController get menuController => ServiceLocator.get<MenuController>();
-  List<bool> selections = List.generate(1, (index) => false);
+  List<bool> selections = List.generate(2, (index) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -103,16 +103,20 @@ Widget menuItem1(
           padding: EdgeInsets.zero,
           child: ToggleButtons(
             onPressed: (index) async {
+              //VcardForm
               //////////
               menuController.controlcloseMenu();
               if (index == 0) {
                 await showWIFIDialog(context: context, intentText: intentText);
               }
+              if (index == 1) {
+                await Get.to(() => VcardForm(
+                      intentText: intentText,
+                    ));
+              }
             },
             isSelected: selections,
-            children: [
-              Icon(Icons.wifi),
-            ],
+            children: [Icon(Icons.wifi), Icon(Icons.credit_card)],
           )),
     ),
   );

@@ -14,6 +14,7 @@ import 'components/qr_generator.dart';
 import 'components/qr_scanner.dart';
 import 'components/widget/custom_url/custom_url.dart';
 import 'components/widget/my_drawer_header.dart';
+import 'components/widget/vcard/form_vcard.dart';
 import 'components/widget/wifi/wifi_dialog.dart';
 part 'components/widget/drawer.dart';
 

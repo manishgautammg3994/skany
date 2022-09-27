@@ -166,25 +166,28 @@ class HomeController extends GetxController {
   }
 
   Future<void> launchURL() async {
-    if (scannedQrCode.value.isURL) {
-      await launch(url: scannedQrCode.value.toString());
+    if (scannedQrCode.value.startsWith("http://")) {
+      await launchUrlString(scannedQrCode.value.toString());
       //launc url
 
     } else if (scannedQrCode.value.startsWith("tel:")) {
       await launch(scheme: "tel:", url: scannedQrCode.value.toString());
     } else if (scannedQrCode.value.startsWith("WIFI:")) {
+      
       //TODO
     } else if (scannedQrCode.value.startsWith("upi://")) {
-      var _url = Uri.parse(scannedQrCode.value.toString());
-      await launchUrl(
-        _url,
-      );
+      await launchUrlString(scannedQrCode.value.toString());
     }
     if (scannedQrCode.value.startsWith("BEGIN:VCARD") &&
         scannedQrCode.value.endsWith("END:VCARD")) {
       if (await FlutterContacts.requestPermission()) {
         Contact.fromVCard(scannedQrCode.value.toString());
       }
+    } else if (scannedQrCode.value.startsWith("https://")) {
+      var _url = Uri.parse(scannedQrCode.value.trim().toString());
+      await launchUrl(
+        _url,
+      );
     } else {
       String? pre = CustomUrl().customurl;
       var newquery = scannedQrCode.replaceAll(" ", "+");

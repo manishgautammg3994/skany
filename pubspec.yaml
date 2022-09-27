@@ -58,6 +58,7 @@ dependencies:
   string_validator:
   receive_sharing_intent:
   flutter_contacts: 
+  vcard_maintained: 
   
 
 dev_dependencies:
