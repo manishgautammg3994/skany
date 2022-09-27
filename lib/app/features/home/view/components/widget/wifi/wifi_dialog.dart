@@ -4,23 +4,17 @@ import 'package:get/get.dart';
 import '../../../../../../../core/service/servicelocator.dart';
 import '../../../../controller/intentlistener.dart';
 
-Future<void> showWIFIDialog(
+Future showWIFIDialog(
     {required BuildContext context, required IntentText intentText}) async {
-  return await showDialog(
+  return await showGeneralDialog(
+      //
       context: context,
-      builder: (context) {
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
-            return SimpleDialog(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text("Generate WIFI QR")],
-              ),
-              children: [
-                WifiWidget(
-                  intentText: intentText,
-                )
-              ],
+            return Container(
+              child: WifiWidget(intentText: intentText),
             );
           },
         );
@@ -34,13 +28,6 @@ List<String?> typesWifi = [
 ];
 //WIFI:    // S: ;  //T: ; //P: ; //H: ;        WEP|WPA|nopass //but in nopass youhave to pass P:;
 
-// class WifiWidget extends StatefulWidget {
-//   final IntentText intentText;
-//   const WifiWidget({Key? key, required this.intentText}) : super(key: key);
-
-//   @override
-//   State<WifiWidget> createState() => _WifiWidgetState();
-// }
 class WifiWidget extends StatefulWidget {
   final IntentText intentText;
   const WifiWidget({Key? key, required this.intentText}) : super(key: key);
@@ -62,132 +49,130 @@ class _WifiWidgetState extends State<WifiWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SingleChildScrollView(
-          child: Column(children: [
-            Form(
-              key: formKey,
-              child: TextFormField(
-                validator: ((value) {
-                  if (value == "" || value == null) {
-                    return "Please Enter a Valid SSID";
-                  } else {
-                    return null;
-                  }
-                }),
-                controller: ssidCont,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                    hintText: "Enter SSID",
-                    hintStyle: TextStyle(
-                      color: Colors.black,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Get.theme.primaryColor,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Get.theme.primaryColor,
-                      ),
-                    ),
-                    suffixIcon: (IconButton(
-                        color: Color.fromARGB(255, 239, 16, 16),
-                        icon: Icon(
-                          Icons.cancel,
-                        ),
-                        onPressed: () {
-                          ssidCont.clear();
-                        }))),
-              ),
-            ),
-            Visibility(
-                visible: isPasswFieldVisible,
-                child: Form(
-                  key: isPasswFieldVisible ? formKey : null,
-                  child: TextFormField(
-                    controller: isPasswFieldVisible ? passCont : null,
-                    keyboardType: TextInputType.text,
-                    validator: ((value) {
-                      if ((selectedType == "WEP" ||
-                              selectedType == "WPA/WPA2PSK") &&
-                          (value == null || value == "")) {
-                        return "Enter a Valid Password";
-                      } else {
-                        return null;
-                      }
-                      //TODO
-                    }),
-                    decoration: InputDecoration(
-                        hintText: "Enter Password",
-                        hintStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          borderSide: BorderSide(
-                            color: Get.theme.primaryColor,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        suffixIcon: (IconButton(
-                            color: Color.fromARGB(255, 109, 107, 107),
-                            icon: Icon(
-                              Icons.cancel,
-                            ),
-                            onPressed: () {
-                              passCont.clear();
-                            }))),
+        Column(children: [
+          Form(
+            key: formKey,
+            child: TextFormField(
+              validator: ((value) {
+                if (value == "" || value == null) {
+                  return "Please Enter a Valid SSID";
+                } else {
+                  return null;
+                }
+              }),
+              controller: ssidCont,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                  hintText: "Enter SSID",
+                  hintStyle: TextStyle(
+                    color: Colors.black,
                   ),
-                )),
-            DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: selectedType,
-                onChanged: ((value) {
-                  setState(() {
-                    if (value == "None") {
-                      isPasswFieldVisible = false;
-                      selectedType = value!;
-                    } else if (value == "WEP") {
-                      isPasswFieldVisible = true;
-                      selectedType = value!;
-                    } else if (value == "WPA/WPA2PSK") {
-                      isPasswFieldVisible = true;
-                      selectedType = value!;
-                    }
-                  });
-                }),
-                items: typesWifi.map((type) {
-                  //any function
-                  return DropdownMenuItem(
-                    value: type,
-                    child: Center(
-                      child: Text(type!),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Get.theme.primaryColor,
                     ),
-                  );
-                }).toList(),
-              ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Get.theme.primaryColor,
+                    ),
+                  ),
+                  suffixIcon: (IconButton(
+                      color: Color.fromARGB(255, 239, 16, 16),
+                      icon: Icon(
+                        Icons.cancel,
+                      ),
+                      onPressed: () {
+                        ssidCont.clear();
+                      }))),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text("Hidden"),
-                Checkbox(
-                    value: isChecked,
-                    onChanged: (checked) {
-                      setState((() {
-                        isChecked = checked!;
-                      }));
-                    })
-              ],
+          ),
+          Visibility(
+              visible: isPasswFieldVisible,
+              child: Form(
+                key: isPasswFieldVisible ? formKey : null,
+                child: TextFormField(
+                  controller: isPasswFieldVisible ? passCont : null,
+                  keyboardType: TextInputType.text,
+                  validator: ((value) {
+                    if ((selectedType == "WEP" ||
+                            selectedType == "WPA/WPA2PSK") &&
+                        (value == null || value == "")) {
+                      return "Enter a Valid Password";
+                    } else {
+                      return null;
+                    }
+                    //TODO
+                  }),
+                  decoration: InputDecoration(
+                      hintText: "Enter Password",
+                      hintStyle: TextStyle(
+                        color: Colors.black,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: BorderSide(
+                          color: Get.theme.primaryColor,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      suffixIcon: (IconButton(
+                          color: Color.fromARGB(255, 109, 107, 107),
+                          icon: Icon(
+                            Icons.cancel,
+                          ),
+                          onPressed: () {
+                            passCont.clear();
+                          }))),
+                ),
+              )),
+          DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: selectedType,
+              onChanged: ((value) {
+                setState(() {
+                  if (value == "None") {
+                    isPasswFieldVisible = false;
+                    selectedType = value!;
+                  } else if (value == "WEP") {
+                    isPasswFieldVisible = true;
+                    selectedType = value!;
+                  } else if (value == "WPA/WPA2PSK") {
+                    isPasswFieldVisible = true;
+                    selectedType = value!;
+                  }
+                });
+              }),
+              items: typesWifi.map((type) {
+                //any function
+                return DropdownMenuItem(
+                  value: type,
+                  child: Center(
+                    child: Text(type!),
+                  ),
+                );
+              }).toList(),
             ),
-          ]),
-        ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text("Hidden"),
+              Checkbox(
+                  value: isChecked,
+                  onChanged: (checked) {
+                    setState((() {
+                      isChecked = checked!;
+                    }));
+                  })
+            ],
+          ),
+        ]),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
