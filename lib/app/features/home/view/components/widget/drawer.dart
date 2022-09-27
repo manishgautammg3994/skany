@@ -55,7 +55,7 @@ Widget myDrawerList(
             intentText: intentText,
             context: context,
             menuController: menuController),
-        menuItem4(),
+        menuItem4(context: context, menuController: menuController),
         menuItem5(),
         menuItem6(),
         menuItem7(), //mkohlakalilucas7@gmail.com
@@ -150,32 +150,22 @@ Widget menuItem3() {
   );
 }
 
-Widget menuItem4() {
+Widget menuItem4(
+    {required BuildContext context, required MenuController menuController}) {
+  CustomUrl custoURL = CustomUrl();
   return Material(
     child: InkWell(
       onTap: () {},
       child: Padding(
         padding: EdgeInsets.all(15.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: Icon(
-                Icons.dashboard_outlined,
-                size: 20,
-                color: Colors.black,
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                "Dashboard",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
+        child: TextField(
+          enabled: false,
+          onTap: () async {
+            menuController.controlcloseMenu();
+            return displayCustomURLTextInputDialog(context);
+          },
+          controller: TextEditingController(text: custoURL.customurl),
+          decoration: InputDecoration(hintText: "Set Your Custom URL"),
         ),
       ),
     ),

@@ -3,7 +3,6 @@ import 'package:get_storage/get_storage.dart';
 class CustomUrl {
   final _box = GetStorage();
   final _key = "customUrl";
-  String? get theme => _customurl;
 
   String? get customurl => _customurl;
   set customurl(String? value) {
