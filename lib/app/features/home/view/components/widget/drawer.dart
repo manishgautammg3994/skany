@@ -162,7 +162,7 @@ Widget menuItem4(
           enabled: false,
           onTap: () async {
             menuController.controlcloseMenu();
-            return displayCustomURLTextInputDialog(context);
+            return await displayCustomURLTextInputDialog(context);
           },
           controller: TextEditingController(text: custoURL.customurl),
           decoration: InputDecoration(hintText: "Set Your Custom URL"),

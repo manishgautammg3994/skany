@@ -1,6 +1,5 @@
 library home_view;
 
-import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
