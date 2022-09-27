@@ -24,7 +24,24 @@ Future showWIFIDialog(
             content: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextField(
+                TextFormField(
+                  validator: (value) {
+                    if (value == null && value?.trim() == "") {
+                      return "Enter SSID";
+                    } else {
+                      if (value!.contains("?") ||
+                          value.contains('"') ||
+                          value.contains('\$') ||
+                          value.contains("\\") ||
+                          value.contains('[') ||
+                          value.contains(']') ||
+                          value.contains('+')) {
+                        return "remove Special character ";
+                      } else {
+                        return null;
+                      }
+                    }
+                  },
                   controller: ssidCont,
                   decoration: InputDecoration(hintText: "Enter SSID"),
                 ),

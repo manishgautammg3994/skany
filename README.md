@@ -113,4 +113,26 @@ New String: llo
 
 
 ```
-upi://pay?pa=8607573994@paytm&pn=MANISH&mc=0000&mode=02&purpose=00&orgid=159761
+upi://pay?pa=8607573994@paytm&pn=MANISH&mc=0000&mode=02&purpose=00&orgid=
+```
+```
+
+void main() {
+   RegExp ssidreg = RegExp(r'(?<=S:)((?:[^\\;\\?\\"\\$\\[\\\\\\]\\+])|(?:\\[\\;,:]))+(?<!\\;)(?=;)' );
+     RegExp passreg = RegExp(r'(?<=P:)((?:\\[\\;,:])|(?:[^;]))+(?<!\\;)(?=;)');
+  String value =r"WIFI:T:WEP;S:test;P:hi;H:true;";
+  print(value.split(ssidreg));
+   print(value.split(passreg));
+  
+  
+}
+```
+```
+password regex r"(?<=P:)((?:\\[\\;,:])|(?:[^;]))+(?<!\\;)(?=;)"
+ssid regex r"(?<=S:)((?:[^\\;\\?\\\"\\$\\[\\\\\\]\\+])|(?:\\[\\;,:]))+(?<!\\;)(?=;)"
+```
+```
+uri = 'BEGIN:VCARD \
+    VERSION:3.0 \
+    N:' + lName + ';' + fName + ';;;' + '\n' + 'FN:' + fName + ' ' + lName + '\n' + 'ORG:' + orgName + ';' + '\n' + 'TITLE:' + jobTitle + '\n' + 'TEL;type=CELL:' + mobileNum + '\n' + 'TEL;type=WORK:' + officeNum + '\n' + 'EMAIL;type=INTERNET;type=WORK;type=pref:' + email + '\n' + 'URL:' + webUrl + '\n' + 'ADR;TYPE=work:;;' + addressLine1 + ';' + addressLine2 + ';' + city + ';' + province + ';' + country + ';' + pCode + '\n' + 'REV:' + dStamp +'\n'+ 'END:VCARD'
+    ```

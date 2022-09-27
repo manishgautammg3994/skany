@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -165,7 +166,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> launchURL() async {
-    if (regExp.hasMatch(scannedQrCode.value)) {
+    if (scannedQrCode.value.isURL) {
       await launch(url: scannedQrCode.value.toString());
       //launc url
 
@@ -174,10 +175,17 @@ class HomeController extends GetxController {
     } else if (scannedQrCode.value.startsWith("WIFI:")) {
       //TODO
     } else if (scannedQrCode.value.startsWith("upi://")) {
-      await launch(url: scannedQrCode.value.toString());
+      var _url = Uri.parse(scannedQrCode.value.toString());
+      await launchUrl(
+        _url,
+      );
     }
-    // if()
-    {
+    if (scannedQrCode.value.startsWith("BEGIN:VARD") &&
+        scannedQrCode.value.endsWith("END:VCARD")) {
+      if (await FlutterContacts.requestPermission()) {
+        Contact.fromVCard(scannedQrCode.value.toString());
+      }
+    } else {
       String? pre = CustomUrl().customurl;
       var newquery = scannedQrCode.replaceAll(" ", "+");
       String fullUrl =

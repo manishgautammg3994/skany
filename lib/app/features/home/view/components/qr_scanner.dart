@@ -173,10 +173,7 @@ class QrCodeScanner extends GetView<HomeController> {
                         Divider(height: 20),
                         Expanded(
                             flex: 1,
-                            child: Text((controller.regExp.hasMatch(controller
-                                    .scannedQrCode.value
-                                    .trim()
-                                    .toString()))
+                            child: Text((controller.scannedQrCode.value.isURL)
                                 ? "Launch"
                                 : "Open")),
                       ],
