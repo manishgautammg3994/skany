@@ -50,11 +50,11 @@ Widget myDrawerList(
     ),
     child: Column(
       children: [
-        menuItem1(
-            selections: selections,
-            intentText: intentText,
-            context: context,
-            menuController: menuController),
+        // menuItem1(
+            // selections: selections,
+            // intentText: intentText,
+            // context: context,
+            // menuController: menuController),
         menuItem4(context: context, menuController: menuController),
         menuItem5(),
         menuItem6(),
@@ -91,32 +91,32 @@ Widget myDrawerList(
   );
 }
 
-Widget menuItem1(
-    {required List<bool> selections,
-    required BuildContext context,
-    required IntentText intentText,
-    required MenuController menuController}) {
-  return Material(
-    child: InkWell(
-      onTap: () {},
-      child: Padding(
-          padding: EdgeInsets.zero,
-          child: ToggleButtons(
-            onPressed: (index) async {
-              //////////
-              menuController.controlcloseMenu();
-              if (index == 0) {
-                await showWIFIDialog(context: context, intentText: intentText);
-              }
-            },
-            isSelected: selections,
-            children: [
-              Icon(Icons.wifi),
-            ],
-          )),
-    ),
-  );
-}
+// Widget menuItem1(
+//     {required List<bool> selections,
+//     required BuildContext context,
+//     required IntentText intentText,
+//     required MenuController menuController}) {
+//   return Material(
+//     child: InkWell(
+//       onTap: () {},
+//       child: Padding(
+//           padding: EdgeInsets.zero,
+//           child: ToggleButtons(
+//             onPressed: (index) async {
+//               //////////
+//               menuController.controlcloseMenu();
+//               if (index == 0) {
+//                 await showWIFIDialog(context: context, intentText: intentText);
+//               }
+//             },
+//             isSelected: selections,
+//             children: [
+//               Icon(Icons.wifi),
+//             ],
+//           )),
+//     ),
+//   );
+// }
 
 Widget menuItem3() {
   return Material(
