@@ -239,6 +239,7 @@ class HomeController extends GetxController {
                       await launchUrl(
                         _url,
                       );
+                      
                       Get.back();
                     },
                   ),
