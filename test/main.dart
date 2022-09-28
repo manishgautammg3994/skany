@@ -50,4 +50,3 @@
 //   // This is a first message.
 //   // 01:15.57
 //   // This is a second message.
-// }

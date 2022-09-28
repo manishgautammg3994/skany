@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -16,8 +16,10 @@ import 'package:skany/app/features/home/controller/setcustomurl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
+import 'package:wifi_connector/wifi_connector.dart';
 
 import '../../../../core/service/servicelocator.dart';
+import '../view/components/widget/vcard/vcard_parser.dart';
 import 'intentlistener.dart';
 
 class HomeController extends GetxController {
@@ -173,24 +175,103 @@ class HomeController extends GetxController {
     } else if (scannedQrCode.value.startsWith("tel:")) {
       await launch(scheme: "tel:", url: scannedQrCode.value.toString());
     } else if (scannedQrCode.value.startsWith("WIFI:")) {
-      
+      String? password;
+      String? ssid;
+      bool? isHidden = scannedQrCode.value.contains("true");
+      bool? isWEP = scannedQrCode.value.contains("WEP");
+      final RegExp passRegex =
+          RegExp(r'(?<=P:)((?:\\[\\;,:])|(?:[^;]))+(?<!\\;)(?=;)');
+      final RegExp ssidRegex =
+          RegExp(r'(?<=S:)((?:\\[\\;,:])|(?:[^;]))+(?<!\\;)(?=;)');
+      List<RegExpMatch> matchesssid =
+          ssidRegex.allMatches(scannedQrCode.value.toString()).toList();
+      List<RegExpMatch> matchespass =
+          passRegex.allMatches(scannedQrCode.value.toString()).toList();
+      for (var matchssid in matchesssid) {
+        ssid = scannedQrCode.value.substring(matchssid.start, matchssid.end);
+        // print(dummyString.contains("true"));
+
+      }
+      for (var matchpass in matchespass) {
+        password =
+            scannedQrCode.value.substring(matchpass.start, matchpass.end);
+        // print(dummyString.contains("true"));
+
+      }
+      await WifiConnector.connectToWifi(
+          ssid: (ssid != null && ssid.trim() != "") ? ssid : "",
+          password:
+              (password != null && password.trim() != "") ? password : null,
+          isWEP: isWEP);
       //TODO
     } else if (scannedQrCode.value.startsWith("upi://")) {
-      await launchUrlString(scannedQrCode.value.toString());
+      if (Platform.isAndroid) {
+        AndroidIntent intent = AndroidIntent(
+          action: 'action_view',
+          data: scannedQrCode.value,
+        );
+        await intent.launch();
+      }
     }
     if (scannedQrCode.value.startsWith("BEGIN:VCARD") &&
         scannedQrCode.value.endsWith("END:VCARD")) {
-      if (await FlutterContacts.requestPermission()) {
-        Contact.fromVCard(scannedQrCode.value.toString());
-      }
+      VCard vc = VCard(scannedQrCode.value.trim().toString());
+      List phoneNumbers = vc.typedTelephone;
+      showModalBottomSheet(
+          context: Get.context!,
+          builder: (context) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  leading: new Icon(Icons.person),
+                  title: new Text(vc.formattedName ?? ""),
+                  onTap: () {
+                    // Navigator.pop(context);
+                  },
+                ),
+                for (var item in vc.typedEmail)
+                  ListTile(
+                    leading: new Icon(Icons.email),
+                    title: new Text(item.toString()),
+                    onTap: () async {
+                      var _url = Uri.parse("mailto:${item.toString()}");
+                      await launchUrl(
+                        _url,
+                      );
+                      Get.back();
+                    },
+                  ),
+                for (var item in vc.typedTelephone)
+                  ListTile(
+                    leading: new Icon(Icons.phone),
+                    title: new Text(item.toString()),
+                    onTap: () async {
+                      final Uri _phoneUri =
+                          Uri(scheme: "tel", path: item.toString());
+                      await launchUrl(
+                        _phoneUri,
+                      );
+                      Get.back();
+                    },
+                  ),
+                for (var item in vc.typedURL)
+                  ListTile(
+                    leading: new Icon(Icons.link),
+                    title: new Text(item.toString()),
+                    onTap: () {
+                      launch(url: item.toString());
+                      Get.back();
+                    },
+                  ),
+              ],
+            );
+          });
     } else if (scannedQrCode.value.startsWith("https://")) {
-      var _url = Uri.parse(scannedQrCode.value.trim().toString());
-      await launchUrl(
-        _url,
-      );
+      await launch(url: scannedQrCode.value.trim().toString());
     } else {
       String? pre = CustomUrl().customurl;
-      var newquery = scannedQrCode.replaceAll(" ", "+");
+      var newquery = scannedQrCode.replaceAll(" ", "+"); //TODO encoding
       String fullUrl =
           (pre != null && pre.toString() != "") ? pre + newquery : newquery;
       await launch(url: fullUrl);
