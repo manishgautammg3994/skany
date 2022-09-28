@@ -61,6 +61,7 @@ dependencies:
   vcard_maintained: 
   android_intent_plus:
   wifi_connector: 
+    path: wifi_connector/
   
 
 dev_dependencies:

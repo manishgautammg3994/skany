@@ -561,9 +561,9 @@ packages:
   wifi_connector:
     dependency: "direct main"
     description:
-      name: wifi_connector
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: wifi_connector
+      relative: true
+    source: path
     version: "2.0.0"
   win32:
     dependency: transitive

@@ -216,7 +216,7 @@ class HomeController extends GetxController {
     if (scannedQrCode.value.startsWith("BEGIN:VCARD") &&
         scannedQrCode.value.endsWith("END:VCARD")) {
       VCard vc = VCard(scannedQrCode.value.trim().toString());
-      List phoneNumbers = vc.typedTelephone;
+
       showModalBottomSheet(
           context: Get.context!,
           builder: (context) {

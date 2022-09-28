@@ -183,9 +183,9 @@ class _VcardFormState extends State<VcardForm> {
                 color: const Color(0xFFF2F2F7),
                 child: Column(
                   children: [
-                    HeadingWithDivider(
-                      label: 'QR Customize',
-                    ),
+                    // HeadingWithDivider(
+                    //   label: 'QR Customize',
+                    // ),
                     // TextField(
                     //   controller: _qrTopDecorationTextEditingController,
                     //   decoration: InputDecoration(label: Text('Top QR Text')),
