@@ -82,22 +82,22 @@ class _VcardFormState extends State<VcardForm> {
       TextEditingController();
 
   //qr ctext controller
-  TextEditingController _qrTopDecorationTextEditingController =
-      TextEditingController();
-  TextEditingController _qrBottomDecorationTextEditingController =
-      TextEditingController();
+  // TextEditingController _qrTopDecorationTextEditingController =
+  //     TextEditingController();
+  // TextEditingController _qrBottomDecorationTextEditingController =
+  //     TextEditingController();
 
   Color backgroundColor = Colors.white;
   Color foregroundColor = Colors.black;
 
-  changeColor(colors, key) {
-    if (key == 'Background Color') {
-      backgroundColor = colors;
-    } else {
-      foregroundColor = colors;
-    }
-    setState(() {});
-  }
+  // changeColor(colors, key) {
+  //   if (key == 'Background Color') {
+  //     backgroundColor = colors;
+  //   } else {
+  //     foregroundColor = colors;
+  //   }
+  //   setState(() {});
+  // }
 
   @override
   void dispose() {
@@ -107,102 +107,104 @@ class _VcardFormState extends State<VcardForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  HeadingWithDivider(
-                    label: 'VCard Content',
-                  ),
-                  TextField(
-                    controller: firstNameTextEditingController,
-                    decoration: InputDecoration(label: Text('First Name')),
-                    keyboardType: TextInputType.text,
-                  ),
-                  TextField(
-                    controller: middleNameTextEditingController,
-                    decoration: InputDecoration(label: Text('Middle Name')),
-                    keyboardType: TextInputType.text,
-                  ),
-                  TextField(
-                    controller: lastNameTextEditingController,
-                    decoration: InputDecoration(label: Text('Last Name')),
-                    keyboardType: TextInputType.text,
-                  ),
-                  TextField(
-                    controller: cellPhoneTextEditingController,
-                    decoration: InputDecoration(label: Text('Cell Phone')),
-                    keyboardType: TextInputType.phone,
-                  ),
-                  TextField(
-                    controller: emailTextEditingController,
-                    decoration: InputDecoration(label: Text('Email')),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  TextField(
-                    controller: organizationTextEditingController,
-                    decoration: InputDecoration(label: Text('Organization')),
-                    keyboardType: TextInputType.text,
-                  ),
-                  TextField(
-                    controller: roleTextEditingController,
-                    decoration: InputDecoration(label: Text('Role')),
-                    keyboardType: TextInputType.text,
-                  ),
-                  TextField(
-                    controller: workPhoneTextEditingController,
-                    decoration: InputDecoration(label: Text('Workphone')),
-                    keyboardType: TextInputType.phone,
-                  ),
-                  TextField(
-                    controller: jobTitleTextEditingController,
-                    decoration: InputDecoration(label: Text('Job Title')),
-                    keyboardType: TextInputType.text,
-                  ),
-                  TextField(
-                    controller: noteTextEditingController,
-                    decoration: InputDecoration(label: Text('Notes')),
-                    keyboardType: TextInputType.text,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
+    return Scaffold(
+      body: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    HeadingWithDivider(
+                      label: 'VCard Content',
+                    ),
+                    TextField(
+                      controller: firstNameTextEditingController,
+                      decoration: InputDecoration(label: Text('First Name')),
+                      keyboardType: TextInputType.text,
+                    ),
+                    TextField(
+                      controller: middleNameTextEditingController,
+                      decoration: InputDecoration(label: Text('Middle Name')),
+                      keyboardType: TextInputType.text,
+                    ),
+                    TextField(
+                      controller: lastNameTextEditingController,
+                      decoration: InputDecoration(label: Text('Last Name')),
+                      keyboardType: TextInputType.text,
+                    ),
+                    TextField(
+                      controller: cellPhoneTextEditingController,
+                      decoration: InputDecoration(label: Text('Cell Phone')),
+                      keyboardType: TextInputType.phone,
+                    ),
+                    TextField(
+                      controller: emailTextEditingController,
+                      decoration: InputDecoration(label: Text('Email')),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    TextField(
+                      controller: organizationTextEditingController,
+                      decoration: InputDecoration(label: Text('Organization')),
+                      keyboardType: TextInputType.text,
+                    ),
+                    TextField(
+                      controller: roleTextEditingController,
+                      decoration: InputDecoration(label: Text('Role')),
+                      keyboardType: TextInputType.text,
+                    ),
+                    TextField(
+                      controller: workPhoneTextEditingController,
+                      decoration: InputDecoration(label: Text('Workphone')),
+                      keyboardType: TextInputType.phone,
+                    ),
+                    TextField(
+                      controller: jobTitleTextEditingController,
+                      decoration: InputDecoration(label: Text('Job Title')),
+                      keyboardType: TextInputType.text,
+                    ),
+                    TextField(
+                      controller: noteTextEditingController,
+                      decoration: InputDecoration(label: Text('Notes')),
+                      keyboardType: TextInputType.text,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              color: const Color(0xFFF2F2F7),
-              child: Column(
-                children: [
-                  HeadingWithDivider(
-                    label: 'QR Customize',
-                  ),
-                  TextField(
-                    controller: _qrTopDecorationTextEditingController,
-                    decoration: InputDecoration(label: Text('Top QR Text')),
-                  ),
-                  TextField(
-                    controller: _qrBottomDecorationTextEditingController,
-                    decoration: InputDecoration(label: Text('Bottom QR Text')),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      _generateVCard();
-                    },
-                    child: const Text('GENERATE'),
-                  ),
-                ],
-              ),
-            )
-          ],
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                color: const Color(0xFFF2F2F7),
+                child: Column(
+                  children: [
+                    HeadingWithDivider(
+                      label: 'QR Customize',
+                    ),
+                    // TextField(
+                    //   controller: _qrTopDecorationTextEditingController,
+                    //   decoration: InputDecoration(label: Text('Top QR Text')),
+                    // ),
+                    // TextField(
+                    //   controller: _qrBottomDecorationTextEditingController,
+                    //   decoration: InputDecoration(label: Text('Bottom QR Text')),
+                    // ),
+                    TextButton(
+                      onPressed: () {
+                        _generateVCard();
+                      },
+                      child: const Text('GENERATE'),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
