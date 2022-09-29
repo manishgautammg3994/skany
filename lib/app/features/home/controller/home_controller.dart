@@ -228,18 +228,13 @@ class HomeController extends GetxController {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Row(
-                  children: [
-                    Expanded(
-                        child: IconButton(
+               Row(children: [Spacer(),IconButton(
                             icon: Icon(Icons.add),
                             onPressed: () async {
                               await openContactApp(
                                   vcfString:
                                       scannedQrCode.value.trim().toString());
-                            })).paddingAll(1)
-                  ],
-                ),
+                            })],),
                 ListTile(
                   leading: new Icon(Icons.person),
                   title: new Text(vc.formattedName ?? ""),
@@ -247,12 +242,12 @@ class HomeController extends GetxController {
                     // Navigator.pop(context);
                   },
                 ),
-                for (var item in vc.typedEmail)
+                for (List? item in vc.typedEmail as List<List?>)
                   ListTile(
                     leading: new Icon(Icons.email),
-                    title: new Text(item[0].toString()),
+                    title: new Text(item.toString()),
                     onTap: () async {
-                      var _url = Uri.parse("mailto:${item[0].toString()}");
+                      var _url = Uri.parse("mailto:${item![0].toString()}");
                       await launchUrl(
                         _url,
                       );
@@ -260,13 +255,13 @@ class HomeController extends GetxController {
                       Get.back();
                     },
                   ),
-                for (var item in vc.typedTelephone)
+                for (List? item in vc.typedTelephone as List<List>)
                   ListTile(
                     leading: new Icon(Icons.phone),
-                    title: new Text(item[0].toString()),
+                    title: new Text(item.toString()),
                     onTap: () async {
                       final Uri _phoneUri =
-                          Uri(scheme: "tel", path: item[0].toString());
+                          Uri(scheme: "tel", path: item![0].toString());
                       await launchUrl(
                         _phoneUri,
                       );
@@ -276,7 +271,7 @@ class HomeController extends GetxController {
                 for (var item in vc.typedURL)
                   ListTile(
                     leading: new Icon(Icons.link),
-                    title: new Text(item[0].toString()),
+                    title: new Text(item.toString()),
                     onTap: () {
                       launch(url: item[0].toString());
                       Get.back();

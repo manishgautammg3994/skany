@@ -142,7 +142,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       //even Getx is not required but for simplification we used that
-      title: 'Kids Learning', //Change if YOU like
+      title: 'Skany', //Change if YOU like
       debugShowCheckedModeBanner: false,
       theme: AppBasicTheme.getThemeDataLight(),
       darkTheme: AppBasicTheme.getThemeDataDark(),
