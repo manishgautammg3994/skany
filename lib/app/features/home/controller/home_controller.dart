@@ -177,7 +177,7 @@ class HomeController extends GetxController {
     } else if (scannedQrCode.value.startsWith("tel:")) {
       final Uri _phoneUri = Uri(
           scheme: "tel",
-          path: scannedQrCode.value.trim().replaceFirst("tel:", ""));
+          path: scannedQrCode.value.trim().replaceFirst("tel:", "").toString());
       await launchUrl(
         _phoneUri,
       );
@@ -228,13 +228,17 @@ class HomeController extends GetxController {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-               Row(children: [Spacer(),IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () async {
-                              await openContactApp(
-                                  vcfString:
-                                      scannedQrCode.value.trim().toString());
-                            })],),
+                Row(
+                  children: [
+                    Spacer(),
+                    IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () async {
+                          await openContactApp(
+                              vcfString: scannedQrCode.value.trim().toString());
+                        })
+                  ],
+                ),
                 ListTile(
                   leading: new Icon(Icons.person),
                   title: new Text(vc.formattedName ?? ""),
