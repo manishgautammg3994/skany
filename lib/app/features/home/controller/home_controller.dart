@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -19,6 +20,7 @@ import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:wifi_connector/wifi_connector.dart';
 
 import '../../../../core/service/servicelocator.dart';
+import '../view/components/widget/vcard/form_vcard.dart';
 import '../view/components/widget/vcard/vcard_parser.dart';
 import 'intentlistener.dart';
 
@@ -173,7 +175,12 @@ class HomeController extends GetxController {
       //launc url
 
     } else if (scannedQrCode.value.startsWith("tel:")) {
-      await launch(scheme: "tel:", url: scannedQrCode.value.toString());
+      final Uri _phoneUri = Uri(
+          scheme: "tel",
+          path: scannedQrCode.value.trim().replaceFirst("tel:", ""));
+      await launchUrl(
+        _phoneUri,
+      );
     } else if (scannedQrCode.value.startsWith("WIFI:")) {
       String? password;
       String? ssid;
@@ -205,16 +212,14 @@ class HomeController extends GetxController {
           isWEP: isWEP);
       //TODO
     } else if (scannedQrCode.value.startsWith("upi://")) {
-      if (Platform.isAndroid) {
-        AndroidIntent intent = AndroidIntent(
-          action: 'action_view',
-          data: scannedQrCode.value,
-        );
-        await intent.launch();
-      }
+      final Uri _upiuri = Uri(
+          scheme: "upi", path: scannedQrCode.value.replaceFirst("upi://", ""));
+      await launchUrl(
+        _upiuri,
+      );
     }
-    if (scannedQrCode.value.startsWith("BEGIN:VCARD") &&
-        scannedQrCode.value.endsWith("END:VCARD")) {
+    if (scannedQrCode.value.trim().startsWith("BEGIN:VCARD") &&
+        scannedQrCode.value.trim().endsWith("END:VCARD")) {
       VCard vc = VCard(scannedQrCode.value.trim().toString());
 
       showModalBottomSheet(
@@ -223,6 +228,18 @@ class HomeController extends GetxController {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                Row(
+                  children: [
+                    Expanded(
+                        child: IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () async {
+                              await openContactApp(
+                                  vcfString:
+                                      scannedQrCode.value.trim().toString());
+                            })).paddingAll(1)
+                  ],
+                ),
                 ListTile(
                   leading: new Icon(Icons.person),
                   title: new Text(vc.formattedName ?? ""),
@@ -233,23 +250,23 @@ class HomeController extends GetxController {
                 for (var item in vc.typedEmail)
                   ListTile(
                     leading: new Icon(Icons.email),
-                    title: new Text(item.toString()),
+                    title: new Text(item[0].toString()),
                     onTap: () async {
-                      var _url = Uri.parse("mailto:${item.toString()}");
+                      var _url = Uri.parse("mailto:${item[0].toString()}");
                       await launchUrl(
                         _url,
                       );
-                      
+
                       Get.back();
                     },
                   ),
                 for (var item in vc.typedTelephone)
                   ListTile(
                     leading: new Icon(Icons.phone),
-                    title: new Text(item.toString()),
+                    title: new Text(item[0].toString()),
                     onTap: () async {
                       final Uri _phoneUri =
-                          Uri(scheme: "tel", path: item.toString());
+                          Uri(scheme: "tel", path: item[0].toString());
                       await launchUrl(
                         _phoneUri,
                       );
@@ -259,9 +276,9 @@ class HomeController extends GetxController {
                 for (var item in vc.typedURL)
                   ListTile(
                     leading: new Icon(Icons.link),
-                    title: new Text(item.toString()),
+                    title: new Text(item[0].toString()),
                     onTap: () {
-                      launch(url: item.toString());
+                      launch(url: item[0].toString());
                       Get.back();
                     },
                   ),
@@ -270,6 +287,13 @@ class HomeController extends GetxController {
           });
     } else if (scannedQrCode.value.startsWith("https://")) {
       await launch(url: scannedQrCode.value.trim().toString());
+    } else if (scannedQrCode.value.trim().startsWith("geo:")) {
+      final Uri _geouri = Uri(
+          scheme: "geo",
+          path: scannedQrCode.value.trim().replaceFirst("geo:", ""));
+      await launchUrl(
+        _geouri,
+      );
     } else {
       String? pre = CustomUrl().customurl;
       var newquery = scannedQrCode.replaceAll(" ", "+"); //TODO encoding
@@ -284,6 +308,19 @@ class HomeController extends GetxController {
       final appDir = await syspaths.getTemporaryDirectory();
       File file = File('${appDir.path}/${DateTime.now()}.jpg');
       await file.writeAsBytes(bytes).then((value) {
+        Share.shareFiles([file.path.toString()]);
+      });
+    } catch (e) {}
+  }
+
+  Future openContactApp({String? vcfString}) async {
+    List<int>? vcfbytes = utf8.encode(vcfString!);
+    try {
+      final appDir = await syspaths.getTemporaryDirectory();
+      File file = File('${appDir.path}/${DateTime.now()}.vcf');
+
+      /// Save to file
+      await file.writeAsBytes(vcfbytes).then((value) {
         Share.shareFiles([file.path.toString()]);
       });
     } catch (e) {}

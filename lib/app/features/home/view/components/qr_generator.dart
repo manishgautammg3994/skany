@@ -97,7 +97,8 @@ class QrCodeGenerator extends GetView<HomeController> {
                                         height: 190,
                                         child: controller.bytes.isEmpty
                                             ? Center(
-                                                child: Text('Empty code ... ',
+                                                child: Text(
+                                                    'Hit ✔️ Or Empty code ... ',
                                                     style: TextStyle(
                                                         color: Colors.black38)),
                                               )
@@ -220,7 +221,7 @@ class QrCodeGenerator extends GetView<HomeController> {
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
           decoration: InputDecoration(
-              hintText: "Hit ✔️ Or Enter Data",
+              hintText: "Enter Data",
               hintStyle: TextStyle(
                 color: Colors.black,
               ),

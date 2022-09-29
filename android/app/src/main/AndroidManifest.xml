@@ -58,15 +58,11 @@
     <action android:name="android.intent.action.SEND" />
     <data android:mimeType="*/*" />
   </intent>
-  <!-- If your app opens http URLs -->
-  <intent>
+ 
+  <!-- If your app open map   -->
+<intent>
     <action android:name="android.intent.action.VIEW" />
-    <data android:mimeType="http" />
-  </intent>
-  <!-- If your app open dialer   -->
-  <intent>
-    <action android:name="android.intent.action.DIAL" />
-    <data android:mimeType="tel" />
+    <data android:mimeType="geo" />
   </intent>
   <intent>
   <action android:name="android.intent.action.TTS_SERVICE" />
@@ -84,11 +80,19 @@
 <intent>
   <action android:name="android.accounts.AccountAuthenticator" />
 </intent>
-<!-- Allows the app to load an icon corresponding to the custom MIME type. -->
+<!-- Allows the app to load an icon corresponding to the custom MIME type. --> 
 <intent>
   <action android:name="android.intent.action.VIEW" />
   <data android:scheme="content" android:host="com.android.contacts"
         android:mimeType="vnd.android.cursor.item/*" />
+</intent>
+<intent>
+  <action android:name="android.intent.action.VIEW" />
+  <data android:host="com.android.contacts"
+        android:mimeType="text/vCard"  />
+        <data android:mimeType="text/directory" />
+        <data android:mimeType="application/vcf" />
+
 </intent>
 
 
