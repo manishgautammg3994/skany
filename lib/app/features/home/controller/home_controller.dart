@@ -6,6 +6,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:flutter_contacts/vcard.dart';
 
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -217,23 +218,28 @@ class HomeController extends GetxController {
           isWEP: isWEP);
       //TODO
     } else if (scannedQrCode.value.trim().startsWith("upi://")) {
-      String? changedUpiUrl = scannedQrCode.value.trim().replaceAll(" ", "+");
+      // String? changedUpiUrl = scannedQrCode.value.trim().replaceAll(" ", "+"); //i will use this after for google pay
 /////
-      final _intent = AndroidIntent(
-        action: 'action_view',
-        data: Uri.encodeFull(changedUpiUrl),
-      );
+      // final _intent = AndroidIntent(
+      //   action: 'action_view',
+      //   data: Uri.encodeFull(changedUpiUrl),
+      // );
 
-      try {
-        _intent.launchChooser("Pay with...");
-      } catch (_) {}
+      // try {
+      //   _intent.launchChooser("Pay with...");
+      // } catch (_) {}
 ////
 
-      // final Uri _upiuri = Uri(
-      //     scheme: "upi", host: scannedQrCode.value.replaceFirst("upi://", ""));
-      // await launchUrl(
-      //   _upiuri,
-      // );
+      final Uri _upiuri = Uri(
+          scheme: "upi",
+          host: "pay",
+          query: scannedQrCode.value
+              .trim()
+              .replaceAll("upi://pay?", "")
+              .trim()); //TODO replace all " " with "+"
+      await launchUrl(
+        _upiuri,
+      );
     }
     if (scannedQrCode.value.trim().startsWith("BEGIN:VCARD") &&
         scannedQrCode.value.trim().endsWith("END:VCARD")) {
@@ -350,40 +356,43 @@ class HomeController extends GetxController {
   }
 
   Future openContactApp({String? vcfString}) async {
-    if (await FlutterContacts.requestPermission()) {
-      Contact.fromVCard(vcfString!);
+    try {
+      List<int>? vcfbytes = utf8.encode(vcfString!);
+      try {
+        final appDir = await syspaths.getTemporaryDirectory();
+        File file = File('${appDir.path}/${DateTime.now()}.vcf');
+
+        /// Save to file
+        await file.writeAsBytes(vcfbytes).then((value) async {
+          // Share.shareFiles([file.path.toString()]);
+          final contactPermission = await Permission.contacts.status;
+          final intent = AndroidIntent(
+            action: 'action_view',
+            data: file.path,
+            type: "text/x-vcard",
+            package: "com.android.contacts",
+            // componentName: "" // todo to add  componentName:
+          );
+          if (contactPermission.isDenied) {
+            await Permission.contacts.request();
+            if (contactPermission.isGranted) {
+              try {
+                await intent.launch();
+              } catch (_) {}
+            }
+          }
+          if (contactPermission.isGranted) {
+            try {
+              await intent.launch();
+            } catch (_) {}
+          }
+        });
+      } catch (_) {}
+    } catch (_) {
+      if (await FlutterContacts.requestPermission()) {
+        Contact.fromVCard(VCardParser().encode(vcfString!));
+      }
     }
-
-    // List<int>? vcfbytes = utf8.encode(vcfString!);
-    // try {
-    //   final appDir = await syspaths.getTemporaryDirectory();
-    //   File file = File('${appDir.path}/${DateTime.now()}.vcf');
-
-    //   /// Save to file
-    //   await file.writeAsBytes(vcfbytes).then((value) async {
-    //     // Share.shareFiles([file.path.toString()]);
-    //     final contactPermission = await Permission.contacts.status;
-    //     final intent = AndroidIntent(
-    //       action: 'android.content.Intent.ACTION_VIEW',
-    //       data: file.path,
-    //       type: "text/x-vcard",
-    //       package: "com.android.contacts", // todo to add  componentName:
-    //     );
-    //     if (contactPermission.isDenied) {
-    //       await Permission.contacts.request();
-    //       if (contactPermission.isGranted) {
-    //         try {
-    //           await intent.launch();
-    //         } catch (_) {}
-    //       }
-    //     }
-    //     if (contactPermission.isGranted) {
-    //       try {
-    //         await intent.launch();
-    //       } catch (_) {}
-    //     }
-    //   });
-    // } catch (_) {}
   }
 }
 

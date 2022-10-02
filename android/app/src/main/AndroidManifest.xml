@@ -37,7 +37,15 @@
   </intent>
   <intent>
     <action android:name="android.intent.action.VIEW" />
-    <data android:scheme="upi" />
+    <category android:name="android.intent.category.DEFAULT" />
+     <category android:name="android.intent.category.BROWSABLE" />
+    <data android:host="pay" android:scheme="upi" />
+  </intent>
+    <intent>
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:host="mandate" android:scheme="upi" />
   </intent>
   <!-- If your app makes calls -->
   <intent>
