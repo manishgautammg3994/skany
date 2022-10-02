@@ -57,6 +57,7 @@ dependencies:
   permission_handler:
   string_validator:
   receive_sharing_intent:
+  flutter_contacts:
  
   vcard_maintained: 
   android_intent_plus:

@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -219,11 +220,13 @@ class HomeController extends GetxController {
       String? changedUpiUrl = scannedQrCode.value.trim().replaceAll(" ", "+");
 /////
       final _intent = AndroidIntent(
-        action: 'android.content.Intent.ACTION_VIEW',
+        action: 'action_view',
         data: Uri.encodeFull(changedUpiUrl),
       );
 
-      _intent.launchChooser("Pay with...");
+      try {
+        _intent.launchChooser("Pay with...");
+      } catch (_) {}
 ////
 
       // final Uri _upiuri = Uri(
@@ -311,19 +314,14 @@ class HomeController extends GetxController {
           });
     } else if (scannedQrCode.value.startsWith("https://")) {
       await launch(url: scannedQrCode.value.trim().toString());
-    } else if (scannedQrCode.value.trim().startsWith("geo:")) {
+    } else if (scannedQrCode.value.trim().startsWith("geo:") ||
+        scannedQrCode.value.trim().startsWith("google.navigation:")) {
       final _intent = AndroidIntent(
-          action: 'android.content.Intent.ACTION_VIEW',
+          action: 'action_view',
           data: Uri.encodeFull(scannedQrCode.value.trim()),
           package: "com.google.android.apps.maps");
       try {
-        bool? canwe = await _intent.canResolveActivity();
-
-        if (canwe!) {
-          _intent.launch();
-        } else {
-          Get.snackbar("Google Map Not Found", "Try Installing Google Map");
-        }
+        _intent.launch();
       } catch (_) {}
 
       // final Uri _geouri = Uri(
@@ -352,36 +350,40 @@ class HomeController extends GetxController {
   }
 
   Future openContactApp({String? vcfString}) async {
-    List<int>? vcfbytes = utf8.encode(vcfString!);
-    try {
-      final appDir = await syspaths.getTemporaryDirectory();
-      File file = File('${appDir.path}/${DateTime.now()}.vcf');
+    if (await FlutterContacts.requestPermission()) {
+      Contact.fromVCard(vcfString!);
+    }
 
-      /// Save to file
-      await file.writeAsBytes(vcfbytes).then((value) async {
-        // Share.shareFiles([file.path.toString()]);
-        final contactPermission = await Permission.contacts.status;
-        final intent = AndroidIntent(
-          action: 'android.content.Intent.ACTION_VIEW',
-          data: file.path,
-          type: "text/x-vcard",
-          package: "com.android.contacts", // todo to add  componentName:
-        );
-        if (contactPermission.isDenied) {
-          await Permission.contacts.request();
-          if (contactPermission.isGranted) {
-            try {
-              await intent.launch();
-            } catch (_) {}
-          }
-        }
-        if (contactPermission.isGranted) {
-          try {
-            await intent.launch();
-          } catch (_) {}
-        }
-      });
-    } catch (_) {}
+    // List<int>? vcfbytes = utf8.encode(vcfString!);
+    // try {
+    //   final appDir = await syspaths.getTemporaryDirectory();
+    //   File file = File('${appDir.path}/${DateTime.now()}.vcf');
+
+    //   /// Save to file
+    //   await file.writeAsBytes(vcfbytes).then((value) async {
+    //     // Share.shareFiles([file.path.toString()]);
+    //     final contactPermission = await Permission.contacts.status;
+    //     final intent = AndroidIntent(
+    //       action: 'android.content.Intent.ACTION_VIEW',
+    //       data: file.path,
+    //       type: "text/x-vcard",
+    //       package: "com.android.contacts", // todo to add  componentName:
+    //     );
+    //     if (contactPermission.isDenied) {
+    //       await Permission.contacts.request();
+    //       if (contactPermission.isGranted) {
+    //         try {
+    //           await intent.launch();
+    //         } catch (_) {}
+    //       }
+    //     }
+    //     if (contactPermission.isGranted) {
+    //       try {
+    //         await intent.launch();
+    //       } catch (_) {}
+    //     }
+    //   });
+    // } catch (_) {}
   }
 }
 

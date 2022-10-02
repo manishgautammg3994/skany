@@ -61,8 +61,12 @@
  
   <!-- If your app open map   -->
 <intent>
-    <action android:name="android.intent.action.VIEW" />
+    <action android:name="android.intent.action.VIEW" /> 
     <data android:mimeType="geo" />
+  </intent>
+  <intent>
+    <action android:name="android.intent.action.VIEW" /> 
+    <data android:mimeType="google.navigation" />
   </intent>
   <intent>
   <action android:name="android.intent.action.TTS_SERVICE" />
