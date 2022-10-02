@@ -84,13 +84,16 @@
 <intent>
   <action android:name="android.intent.action.VIEW" />
   <data android:scheme="content" android:host="com.android.contacts"
-        android:mimeType="vnd.android.cursor.item/*" />
+        android:mimeType="vnd.android.cursor.dir/preview_contact" />
 </intent>
 <intent>
   <action android:name="android.intent.action.VIEW" />
   <data android:host="com.android.contacts"
-        android:mimeType="text/vCard"  />
+        android:mimeType="text/x-vcard"  />
         <data android:mimeType="text/directory" />
+          <data android:mimeType="text/vcard" /> 
+        <data android:mimeType="text/vCard" />
+          <data android:mimeType="text/x-vCard" />
         <data android:mimeType="application/vcf" />
 
 </intent>

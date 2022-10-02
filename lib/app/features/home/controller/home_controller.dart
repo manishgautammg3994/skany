@@ -171,15 +171,19 @@ class HomeController extends GetxController {
 
   Future<void> launchURL() async {
     if (scannedQrCode.value.startsWith("http://")) {
-      await launchUrlString(scannedQrCode.value.toString());
+      Uri _url = Uri.parse(scannedQrCode.value.toString());
+      await launchUrl(_url);
       //launc url
 
     } else if (scannedQrCode.value.trim().startsWith("tel:")) {
-      final Uri _phoneUri = Uri(
-          scheme: "tel",
-          host: scannedQrCode.value.trim().replaceFirst("tel:", "").toString());
+      final Uri _phoneUri = Uri.parse(scannedQrCode.value.trim().toString());
       await launchUrl(
         _phoneUri,
+      );
+    } else if (scannedQrCode.value.trim().startsWith("sms:")) {
+      final Uri _smsUri = Uri.parse(scannedQrCode.value.trim().toString());
+      await launchUrl(
+        _smsUri,
       );
     } else if (scannedQrCode.value.trim().startsWith("WIFI:")) {
       String? password;
@@ -211,12 +215,22 @@ class HomeController extends GetxController {
               (password != null && password.trim() != "") ? password : null,
           isWEP: isWEP);
       //TODO
-    } else if (scannedQrCode.value.startsWith("upi://")) {
-      final Uri _upiuri = Uri(
-          scheme: "upi", host: scannedQrCode.value.replaceFirst("upi://", ""));
-      await launchUrl(
-        _upiuri,
+    } else if (scannedQrCode.value.trim().startsWith("upi://")) {
+      String? changedUpiUrl = scannedQrCode.value.trim().replaceAll(" ", "+");
+/////
+      final _intent = AndroidIntent(
+        action: 'android.content.Intent.ACTION_VIEW',
+        data: Uri.encodeFull(changedUpiUrl),
       );
+
+      _intent.launchChooser("Pay with...");
+////
+
+      // final Uri _upiuri = Uri(
+      //     scheme: "upi", host: scannedQrCode.value.replaceFirst("upi://", ""));
+      // await launchUrl(
+      //   _upiuri,
+      // );
     }
     if (scannedQrCode.value.trim().startsWith("BEGIN:VCARD") &&
         scannedQrCode.value.trim().endsWith("END:VCARD")) {
@@ -228,12 +242,21 @@ class HomeController extends GetxController {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () async {
-                      await openContactApp(
-                          vcfString: scannedQrCode.value.trim().toString());
-                    }),
+                Row(
+                  children: [
+                    Spacer(),
+                    IconButton(
+                        tooltip: "Add to Contact",
+                        icon: Icon(Icons.add),
+                        onPressed: () async {
+                          await openContactApp(
+                              vcfString: scannedQrCode.value.trim().toString());
+                        }),
+                    SizedBox(
+                      width: 2,
+                    )
+                  ],
+                ),
                 ListTile(
                   leading: new Icon(Icons.person),
                   title: new Text(vc.formattedName ?? ""),
@@ -289,12 +312,26 @@ class HomeController extends GetxController {
     } else if (scannedQrCode.value.startsWith("https://")) {
       await launch(url: scannedQrCode.value.trim().toString());
     } else if (scannedQrCode.value.trim().startsWith("geo:")) {
-      final Uri _geouri = Uri(
-          scheme: "geo",
-          host: scannedQrCode.value.trim().replaceFirst("geo:", ""));
-      await launchUrl(
-        _geouri,
-      );
+      final _intent = AndroidIntent(
+          action: 'android.content.Intent.ACTION_VIEW',
+          data: Uri.encodeFull(scannedQrCode.value.trim()),
+          package: "com.google.android.apps.maps");
+      try {
+        bool? canwe = await _intent.canResolveActivity();
+
+        if (canwe!) {
+          _intent.launch();
+        } else {
+          Get.snackbar("Google Map Not Found", "Try Installing Google Map");
+        }
+      } catch (_) {}
+
+      // final Uri _geouri = Uri(
+      //     scheme: "geo",
+      //     host: scannedQrCode.value.trim().replaceFirst("geo:", ""));
+      // await launchUrl(
+      //   _geouri,
+      // );
     } else {
       String? pre = CustomUrl().customurl;
       var newquery = scannedQrCode.replaceAll(" ", "+"); //TODO encoding
@@ -321,10 +358,30 @@ class HomeController extends GetxController {
       File file = File('${appDir.path}/${DateTime.now()}.vcf');
 
       /// Save to file
-      await file.writeAsBytes(vcfbytes).then((value) {
-        Share.shareFiles([file.path.toString()]);
+      await file.writeAsBytes(vcfbytes).then((value) async {
+        // Share.shareFiles([file.path.toString()]);
+        final contactPermission = await Permission.contacts.status;
+        final intent = AndroidIntent(
+          action: 'android.content.Intent.ACTION_VIEW',
+          data: file.path,
+          type: "text/x-vcard",
+          package: "com.android.contacts", // todo to add  componentName:
+        );
+        if (contactPermission.isDenied) {
+          await Permission.contacts.request();
+          if (contactPermission.isGranted) {
+            try {
+              await intent.launch();
+            } catch (_) {}
+          }
+        }
+        if (contactPermission.isGranted) {
+          try {
+            await intent.launch();
+          } catch (_) {}
+        }
       });
-    } catch (e) {}
+    } catch (_) {}
   }
 }
 
@@ -337,3 +394,32 @@ Future<void> launch({String? scheme, String? url}) async {
             : LaunchMode.externalApplication); //implement forceSafariVC for ios
   }
 }
+
+// Future<void> dial(
+//   String number, {
+//   bool retryWithFaceTime = false,
+//   bool useFaceTimeAudio = false,
+// }) async {
+//   final phonePermission = await Permission.phone.status;
+
+//   if (Platform.isAndroid) {
+//     final intent = AndroidIntent(
+//       action: 'android.intent.action.CALL',
+//       data: 'tel:$number',
+//     );
+//     if (phonePermission.isDenied) {
+//       Permission.phone.request().then((status) {
+//         if (status.isGranted) {
+//           intent.launch();
+//         }
+//       });
+//     }
+//     if (phonePermission.isGranted) {
+//       try {
+//         await intent.launch();
+//       } catch (e) {
+//         print(e);
+//       }
+//     }
+//   }
+// }
