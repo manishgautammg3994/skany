@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // ignore: todo
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(seconds: 3), () {
       // Navigator.of(context)
       //     .pushReplacement(MaterialPageRoute(builder: (_) => HomePage()));
       Get.offAllNamed(Routes.home);

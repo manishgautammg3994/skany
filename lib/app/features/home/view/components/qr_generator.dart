@@ -72,7 +72,7 @@ class QrCodeGenerator extends GetView<HomeController> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 28,
             ),
             buildTextField(context),
           ],
