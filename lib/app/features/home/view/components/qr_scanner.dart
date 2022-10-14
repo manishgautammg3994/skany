@@ -22,7 +22,7 @@ class QrCodeScanner extends GetView<HomeController> {
         tooltip: 'Take a Photo',
         child: const Icon(Icons.camera_alt),
       ),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      // backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         leading: Center(
           child: IconButton(
@@ -70,7 +70,8 @@ class QrCodeScanner extends GetView<HomeController> {
                           child: Center(
                             child: SelectableText(
                               controller.scannedQrCode.value.toString(),
-                              style: const TextStyle(fontSize: 20),
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.blue),
                             ),
                           ),
                         )).paddingOnly(left: 3, right: 3, top: 5)

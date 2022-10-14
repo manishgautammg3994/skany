@@ -59,7 +59,7 @@ Widget myDrawerList(
         menuItem5(),
         menuItem6(),
         menuItem7(), //mkohlakalilucas7@gmail.com
-        menuItem3(),
+        menuItem3(menuController),
         Divider(),
         Divider(
           color: Colors.red[100],
@@ -122,10 +122,25 @@ Widget menuItem1(
   );
 }
 
-Widget menuItem3() {
+Widget menuItem3( menuController) {
   return Material(
     child: InkWell(
-      onTap: () {},
+      onTap: () async {
+          menuController.controlcloseMenu();
+        showAboutDialog(
+          context: Get.context!,
+          applicationIcon: Image.asset("assets/images/icon.png"),
+          applicationName: 'Skany',
+          applicationVersion: '1.0.90',
+          applicationLegalese: '©2022 Skany',
+          children: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(top: 15),
+                child: Text(
+                    'This App is  Designed and developed by Lucas under Skany Project'))
+          ],
+        );
+      },
       child: Padding(
         padding: EdgeInsets.all(15.0),
         child: Row(
@@ -142,7 +157,7 @@ Widget menuItem3() {
               child: Text(
                 "About Us",
                 style: TextStyle(
-                  color: Colors.black,
+                 
                   fontSize: 16,
                 ),
               ),
@@ -203,7 +218,7 @@ Widget menuItem5() {
               child: Text(
                 "Report Bug",
                 style: TextStyle(
-                  color: Colors.black,
+             
                   fontSize: 16,
                 ),
               ),
@@ -237,7 +252,7 @@ Widget menuItem6() {
               child: Text(
                 "Privacy Policy",
                 style: TextStyle(
-                  color: Colors.black,
+              
                   fontSize: 16,
                 ),
               ),
@@ -273,7 +288,7 @@ Widget menuItem7() {
               child: Text(
                 "Feedback",
                 style: TextStyle(
-                  color: Colors.black,
+             
                   fontSize: 16,
                 ),
               ),
@@ -339,7 +354,7 @@ Widget menuItem9() {
               child: Text(
                 "Dashboard",
                 style: TextStyle(
-                  color: Colors.black,
+               
                   fontSize: 16,
                 ),
               ),

@@ -18,7 +18,7 @@ class QrCodeGenerator extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      // backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         actions: [
           Obx(() => (controller.qrCodeinput.value.length > 0)
