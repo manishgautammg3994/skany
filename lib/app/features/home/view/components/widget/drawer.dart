@@ -214,7 +214,9 @@ Widget menuItem5() {
 Widget menuItem6() {
   return Material(
     child: InkWell(
-      onTap: () {},
+      onTap: () async {
+        launch(url: "https://zamil356.github.io/SKANY-/");
+      },
       child: Padding(
         padding: EdgeInsets.all(15.0),
         child: Row(
