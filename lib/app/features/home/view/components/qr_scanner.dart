@@ -117,8 +117,10 @@ class QrCodeScanner extends GetView<HomeController> {
               SizedBox(
                 height: 8,
               ),
-              controller.banner == null
-                  ? Container()
+              (controller.banner == null)
+                  ? SizedBox(
+                      height: 2,
+                    )
                   : Container(
                       margin: EdgeInsets.only(bottom: 12),
                       child: AdWidget(ad: controller.banner!),

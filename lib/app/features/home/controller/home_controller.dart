@@ -66,7 +66,11 @@ class HomeController extends GetxController {
       },
       cancelOnError: false,
     );
-    createBannerAd();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        createBannerAd();
+      },
+    );
   }
 
   @override
@@ -94,7 +98,7 @@ class HomeController extends GetxController {
 
   // }
 
-  void createBannerAd() {
+  Future<void> createBannerAd() async {
     banner = BannerAd(
         size: AdSize.fullBanner,
         adUnitId: AdMobService.bannerAdUnitId!,
