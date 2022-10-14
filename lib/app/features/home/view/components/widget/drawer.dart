@@ -122,16 +122,19 @@ Widget menuItem1(
   );
 }
 
-Widget menuItem3( menuController) {
+Widget menuItem3(menuController) {
   return Material(
     child: InkWell(
       onTap: () async {
-          menuController.controlcloseMenu();
+        menuController.controlcloseMenu();
         showAboutDialog(
           context: Get.context!,
-          applicationIcon: Image.asset("assets/images/icon.png"),
+          applicationIcon: Image.asset(
+            "assets/images/icon.png",
+            height: 10,
+            width: 10,
+          ),
           applicationName: 'Skany',
-          applicationVersion: '1.0.90',
           applicationLegalese: '©2022 Skany',
           children: <Widget>[
             Padding(
@@ -157,7 +160,6 @@ Widget menuItem3( menuController) {
               child: Text(
                 "About Us",
                 style: TextStyle(
-                 
                   fontSize: 16,
                 ),
               ),
@@ -218,7 +220,6 @@ Widget menuItem5() {
               child: Text(
                 "Report Bug",
                 style: TextStyle(
-             
                   fontSize: 16,
                 ),
               ),
@@ -252,7 +253,6 @@ Widget menuItem6() {
               child: Text(
                 "Privacy Policy",
                 style: TextStyle(
-              
                   fontSize: 16,
                 ),
               ),
@@ -288,7 +288,6 @@ Widget menuItem7() {
               child: Text(
                 "Feedback",
                 style: TextStyle(
-             
                   fontSize: 16,
                 ),
               ),
@@ -354,7 +353,6 @@ Widget menuItem9() {
               child: Text(
                 "Dashboard",
                 style: TextStyle(
-               
                   fontSize: 16,
                 ),
               ),
