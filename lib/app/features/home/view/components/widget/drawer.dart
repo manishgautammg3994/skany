@@ -182,7 +182,11 @@ Widget menuItem4(
 Widget menuItem5() {
   return Material(
     child: InkWell(
-      onTap: () {},
+      onTap: () async {
+        launch(
+            url:
+                "mailto:mkohlakalilucas7@gmail.com?subject=Bug_in_Skany&body=");
+      },
       child: Padding(
         padding: EdgeInsets.all(15.0),
         child: Row(
@@ -248,7 +252,11 @@ Widget menuItem6() {
 Widget menuItem7() {
   return Material(
     child: InkWell(
-      onTap: () {},
+      onTap: () async {
+        launch(
+            url:
+                "mailto:mkohlakalilucas7@gmail.com?subject=Feedback_of_Skany&body=");
+      },
       child: Padding(
         padding: EdgeInsets.all(15.0),
         child: Row(
