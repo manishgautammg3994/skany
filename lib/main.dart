@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
 import '/core/config/routes/app_pages.dart';
@@ -24,6 +26,7 @@ void main() async {
   ServiceLocator
       .init(); // even you can prefer getxservices for singolton dependecy injection but in that case you have to call that after   WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
@@ -140,47 +143,55 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      //even Getx is not required but for simplification we used that
-      title: 'Skany', //Change if YOU like
-      debugShowCheckedModeBanner: false,
-      theme: AppBasicTheme.getThemeDataLight(),
-      darkTheme: AppBasicTheme.getThemeDataDark(),
-      themeMode: themeService.theme,
-      // translations: Messages(),
-      // locale: Locale(localeService.locale),
-      // supportedLocales: L10n.all,
-      // fallbackLocale: const Locale('en'),
-      routingCallback: (route) {
-        debugPrint(route?.previous.toString());
-        debugPrint(route?.current.toString());
-        if (route?.previous == "your route name path" &&
-            route?.current == "when the current route") {
-          debugPrint("show ads");
-        }
+    return ThemeProvider(
+      initTheme: themeService.darkMode
+          ? AppBasicTheme.getThemeDataDark()
+          : AppBasicTheme.getThemeDataLight(),
+      builder: (context, theme) {
+        return GetMaterialApp(
+          //even Getx is not required but for simplification we used that
+          title: 'Skany', //Change if YOU like
+          debugShowCheckedModeBanner: false,
+          theme: AppBasicTheme.getThemeDataLight(),
+          darkTheme: AppBasicTheme.getThemeDataDark(),
+          themeMode: themeService.theme,
+          // translations: Messages(),
+          // locale: Locale(localeService.locale),
+          // supportedLocales: L10n.all,
+          // fallbackLocale: const Locale('en'),
+          routingCallback: (route) {
+            debugPrint(route?.previous.toString());
+            debugPrint(route?.current.toString());
+            if (route?.previous == "your route name path" &&
+                route?.current == "when the current route") {
+              debugPrint("show ads");
+            }
+          },
+          // builder: (context, child) => ResponsiveWrapper.builder(
+          //   child,
+          //   maxWidth: 1200,
+          //   minWidth: 480,
+          //   defaultScale: true,
+          //   breakpoints: [
+          //     const ResponsiveBreakpoint.resize(480, name: MOBILE),
+          //     const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+          //     const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+          //   ],
+          // ),
+          // getPages: AppPages.routes,
+          // initialRoute: AppPages.initial,
+          // home: MyAppz(),
+          // localizationsDelegates: [ // TODO add yourselef if you can or leave it
+          //    // AppLocalizations.delegate,
+          //   GlobalMaterialLocalizations.delegate,
+          //   GlobalCupertinoLocalizations.delegate,
+          //   GlobalWidgetsLocalizations.delegate,
+          // ],
+          home: HomePage(),
+          initialBinding: HomeBinding(),
+        );
       },
-      // builder: (context, child) => ResponsiveWrapper.builder(
-      //   child,
-      //   maxWidth: 1200,
-      //   minWidth: 480,
-      //   defaultScale: true,
-      //   breakpoints: [
-      //     const ResponsiveBreakpoint.resize(480, name: MOBILE),
-      //     const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-      //     const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-      //   ],
-      // ),
-      // getPages: AppPages.routes,
-      // initialRoute: AppPages.initial,
-// home: MyAppz(),
-      // localizationsDelegates: [ // TODO add yourselef if you can or leave it
-      //    // AppLocalizations.delegate,
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      // ],
-      home: HomePage(),
-      initialBinding: HomeBinding(),
+      // child:
     );
   }
 }

@@ -9,6 +9,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_contacts/vcard.dart';
 
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -16,6 +17,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:share_plus/share_plus.dart';
 import 'package:skany/app/features/home/controller/setcustomurl.dart';
+import 'package:skany/core/service/admob_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
@@ -27,6 +29,7 @@ import '../view/components/widget/vcard/vcard_parser.dart';
 import 'intentlistener.dart';
 
 class HomeController extends GetxController {
+  BannerAd? banner;
   var wifiPattern = "(WIFI:S:)(.{1,32})(;T:)(WPA|WEP)(;P:)(.{1,32})(;;)";
   TextEditingController qrContentEditingcontroller = TextEditingController();
 
@@ -63,6 +66,7 @@ class HomeController extends GetxController {
       },
       cancelOnError: false,
     );
+    createBannerAd();
   }
 
   @override
@@ -89,6 +93,15 @@ class HomeController extends GetxController {
   //   super.onReady();
 
   // }
+
+  void createBannerAd() {
+    banner = BannerAd(
+        size: AdSize.fullBanner,
+        adUnitId: AdMobService.bannerAdUnitId!,
+        listener: AdMobService.bannerListener,
+        request: const AdRequest())
+      ..load(); //prefer large one
+  }
 
   @override
   void onClose() {
@@ -192,6 +205,7 @@ class HomeController extends GetxController {
       String? ssid;
       bool? isHidden = scannedQrCode.value.contains("true");
       bool? isWEP = scannedQrCode.value.contains("WEP");
+      bool? isnoPass = scannedQrCode.value.contains("T:no");
       final RegExp passRegex =
           RegExp(r'(?<=P:)((?:\\[\\;,:])|(?:[^;]))+(?<!\\;)(?=;)');
       final RegExp ssidRegex =
@@ -211,11 +225,63 @@ class HomeController extends GetxController {
         // print(dummyString.contains("true"));
 
       }
-      await WifiConnector.connectToWifi(
-          ssid: (ssid != null && ssid.trim() != "") ? ssid : "",
-          password:
-              (password != null && password.trim() != "") ? password : null,
-          isWEP: isWEP);
+      showModalBottomSheet(
+          context: Get.context!,
+          builder: (context) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  children: [
+                    Spacer(),
+                    IconButton(
+                        tooltip: "Add to Saved Wifi",
+                        icon: Icon(Icons.add),
+                        onPressed: () async {
+                          await WifiConnector.connectToWifi(
+                              ssid: (ssid != null && ssid.trim() != "")
+                                  ? ssid
+                                  : "",
+                              password:
+                                  (password != null && password.trim() != "")
+                                      ? password
+                                      : null,
+                              isWEP: isWEP);
+                        }),
+                    SizedBox(
+                      width: 2,
+                    )
+                  ],
+                ),
+                ListTile(
+                  leading: const Icon(Icons.sensors_outlined),
+                  title: Text(ssid ?? ""),
+                  onTap: () {
+                    // Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.wifi_password),
+                  title: Text(password ?? ""),
+                  onTap: () {
+                    // Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.security_sharp),
+                  title: Text(isnoPass
+                      ? "No Encryption"
+                      : isWEP
+                          ? "WEP"
+                          : "WPA/WPA2PSK"),
+                  onTap: () {
+                    // Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
+          });
+
       //TODO
     } else if (scannedQrCode.value.trim().startsWith("upi://")) {
       // String? changedUpiUrl = scannedQrCode.value.trim().replaceAll(" ", "+"); //i will use this after for google pay
@@ -240,8 +306,7 @@ class HomeController extends GetxController {
       await launchUrl(
         _upiuri,
       );
-    }
-    if (scannedQrCode.value.trim().startsWith("BEGIN:VCARD") &&
+    } else if (scannedQrCode.value.trim().startsWith("BEGIN:VCARD") &&
         scannedQrCode.value.trim().endsWith("END:VCARD")) {
       VCard vc = VCard(scannedQrCode.value.trim().toString());
 

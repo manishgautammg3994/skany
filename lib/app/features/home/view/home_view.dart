@@ -1,9 +1,9 @@
 library home_view;
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../../../core/service/MenuController.dart';
 import '../../../../core/service/servicelocator.dart';
@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
   MenuController get menuController => ServiceLocator.get<MenuController>();
   IntentImage get intentImage => ServiceLocator.get<IntentImage>();
   IntentText get intentText => ServiceLocator.get<IntentText>();
+  // BannerAd? _banner;
 
   @override
   void initState() {
@@ -73,6 +74,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       key: menuController.scaffoldKey,
       drawer: _Drawer(),
       body: Center(

@@ -37,32 +37,37 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  get:
-  get_it:
+
+  
+  get: #used
+  get_it: #used
   # qr_flutter: 
   # flutter_barcode_scanner:
-  qrscan:
+  qrscan: #used as main
     path: qrscan/
-  image_picker:
+  image_picker: 
   url_launcher: 
-  clipboard: 
-  flutter_localizations:
+  clipboard: #used
+  flutter_localizations: # not used remove it
   
     sdk: flutter
-  get_storage: 
+  get_storage: #used
   screenshot: 
   path_provider:
-  image_gallery_saver:
-  share_plus: 
+  image_gallery_saver: #used
+  share_plus: #used
   permission_handler:
   string_validator:
-  receive_sharing_intent:
+  receive_sharing_intent: #used
   flutter_contacts:
+
  
   vcard_maintained: 
   android_intent_plus:
   wifi_connector: 
     path: wifi_connector/
+  google_mobile_ads: 
+  animated_theme_switcher: ^2.0.7
   
 
 dev_dependencies:

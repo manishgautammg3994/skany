@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../../core/service/MenuController.dart';
@@ -11,6 +13,7 @@ import 'ButtonWidget.dart';
 
 class QrCodeScanner extends GetView<HomeController> {
   MenuController get menuController => ServiceLocator.get<MenuController>();
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +112,14 @@ class QrCodeScanner extends GetView<HomeController> {
                     onClicked: () => controller.scanPhoto(),
                   )
                 ],
-              )
+              ),
+              controller.banner == null
+                  ? Container()
+                  : Container(
+                      margin: EdgeInsets.only(bottom: 12),
+                      height: 52,
+                      child: AdWidget(ad:controller.banner! ),
+                    ),
             ],
           ),
         ),
