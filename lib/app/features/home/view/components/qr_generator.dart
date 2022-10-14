@@ -222,9 +222,7 @@ class QrCodeGenerator extends GetView<HomeController> {
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
           decoration: InputDecoration(
               hintText: "Enter Data",
-              hintStyle: TextStyle(
-                color: Colors.black,
-              ),
+              hintStyle: TextStyle(),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
                 borderSide: BorderSide(

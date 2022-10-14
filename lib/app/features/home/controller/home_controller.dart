@@ -77,6 +77,7 @@ class HomeController extends GetxController {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    banner?.dispose();
     intentImage.incomingImageController.close();
     intentText.incomingTextController.close();
   }
