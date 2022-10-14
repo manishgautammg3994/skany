@@ -13,7 +13,7 @@ import 'ButtonWidget.dart';
 
 class QrCodeScanner extends GetView<HomeController> {
   MenuController get menuController => ServiceLocator.get<MenuController>();
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,12 +113,14 @@ class QrCodeScanner extends GetView<HomeController> {
                   )
                 ],
               ),
+              SizedBox(
+                height: 8,
+              ),
               controller.banner == null
                   ? Container()
                   : Container(
                       margin: EdgeInsets.only(bottom: 12),
-                      height: 52,
-                      child: AdWidget(ad:controller.banner! ),
+                      child: AdWidget(ad: controller.banner!),
                     ),
             ],
           ),

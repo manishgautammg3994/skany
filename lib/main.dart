@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -143,12 +142,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ThemeProvider(
-      initTheme: themeService.darkMode
-          ? AppBasicTheme.getThemeDataDark()
-          : AppBasicTheme.getThemeDataLight(),
-      builder: (context, theme) {
-        return GetMaterialApp(
+     return GetMaterialApp(
           //even Getx is not required but for simplification we used that
           title: 'Skany', //Change if YOU like
           debugShowCheckedModeBanner: false,
@@ -190,8 +184,5 @@ class _MyAppState extends State<MyApp> {
           home: HomePage(),
           initialBinding: HomeBinding(),
         );
-      },
-      // child:
-    );
   }
 }

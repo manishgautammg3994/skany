@@ -67,7 +67,7 @@ dependencies:
   wifi_connector: 
     path: wifi_connector/
   google_mobile_ads: ^1.2.0
-  animated_theme_switcher: ^2.0.7
+  # animated_theme_switcher: ^2.0.7
   
 
 dev_dependencies:
