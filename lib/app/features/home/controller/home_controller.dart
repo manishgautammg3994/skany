@@ -465,7 +465,9 @@ class HomeController extends GetxController {
             } catch (_) {}
           }
         });
-      } catch (_) {}
+      } catch (_) {
+        Get.snackbar("    Sorry ", "Can't Add to Contacts ");
+      }
     } catch (_) {
       if (await FlutterContacts.requestPermission()) {
         Contact.fromVCard(VCardParser().encode(vcfString!));
