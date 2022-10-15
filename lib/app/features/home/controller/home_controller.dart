@@ -43,6 +43,7 @@ class HomeController extends GetxController {
   var bytes = Uint8List(0);
   IntentImage get intentImage => ServiceLocator.get<IntentImage>();
   IntentText get intentText => ServiceLocator.get<IntentText>();
+  var adsLoaded = false.obs;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -102,10 +103,10 @@ class HomeController extends GetxController {
   Future<void> createBannerAd() async {
     banner = BannerAd(
         size: AdSize.fullBanner,
-        adUnitId: AdMobService.bannerAdUnitId!,
+        adUnitId: AdMobService.bannerAdUnitId ?? BannerAd.testAdUnitId,
         listener: AdMobService.bannerListener,
-        request: const AdRequest())
-      ..load(); //prefer large one
+        request: const AdRequest());
+    banner?.load().then((value) => adsLoaded.value = true); //prefer large one
   }
 
   @override
@@ -210,7 +211,8 @@ class HomeController extends GetxController {
       String? ssid;
       bool? isHidden = scannedQrCode.value.contains("true");
       bool? isWEP = scannedQrCode.value.contains("WEP");
-      bool? isnoPass = scannedQrCode.value.contains("T:no");
+      bool? isWPA = scannedQrCode.value.contains("WPA");
+      bool? isnoPass = (!isWEP && !isWPA) ? true : false;
       final RegExp passRegex =
           RegExp(r'(?<=P:)((?:\\[\\;,:])|(?:[^;]))+(?<!\\;)(?=;)');
       final RegExp ssidRegex =

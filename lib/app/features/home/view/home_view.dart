@@ -74,14 +74,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       key: menuController.scaffoldKey,
       drawer: _Drawer(),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.qr_code_scanner),

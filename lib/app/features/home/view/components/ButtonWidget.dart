@@ -5,14 +5,12 @@ import "package:flutter/material.dart";
 class ButtonWidget extends StatelessWidget {
   final String text;
   final VoidCallback onClicked;
-  final Color color;
 
-  const ButtonWidget(
-      {Key? key,
-      required this.text,
-      required this.onClicked,
-      required this.color})
-      : super(key: key);
+  const ButtonWidget({
+    Key? key,
+    required this.text,
+    required this.onClicked,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +20,7 @@ class ButtonWidget extends StatelessWidget {
         style: TextStyle(fontSize: 21),
       ),
       shape: StadiumBorder(),
-      color: color,
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      textColor: Colors.black,
       onPressed: onClicked,
     );
   }

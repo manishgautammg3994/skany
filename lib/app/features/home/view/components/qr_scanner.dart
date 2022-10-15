@@ -33,11 +33,10 @@ class QrCodeScanner extends GetView<HomeController> {
             onPressed: () => menuController.controlMenu(),
           ),
         ),
-        backgroundColor: Colors.white70,
         title: Text(
           "SKANY",
-          style: TextStyle(
-              color: Colors.black87, fontFamily: "Sofia"), //where is sofia
+          // style: TextStyle(
+          //     color: Colors.black87, fontFamily: "Sofia"), //where is sofia
         ),
         centerTitle: true,
         elevation: 0.0,
@@ -102,13 +101,11 @@ class QrCodeScanner extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ButtonWidget(
-                    color: Colors.white,
                     text: "Scan QR Code",
                     onClicked: () => controller.scan(),
                   ),
                   Spacer(),
                   ButtonWidget(
-                    color: Colors.white,
                     text: "Scan From File",
                     onClicked: () => controller.scanPhoto(),
                   )
@@ -117,14 +114,20 @@ class QrCodeScanner extends GetView<HomeController> {
               SizedBox(
                 height: 8,
               ),
-              (controller.banner == null)
-                  ? SizedBox(
-                      height: 2,
-                    )
-                  : Container(
-                      margin: EdgeInsets.only(bottom: 12),
-                      child: AdWidget(ad: controller.banner!),
-                    ),
+              Obx((() {
+                if (controller.adsLoaded.value) {
+                  return Container(
+                    width: controller.banner?.size.width.toDouble(),
+                    height: controller.banner?.size.height.toDouble(),
+                    margin: EdgeInsets.only(bottom: 12),
+                    child: AdWidget(ad: controller.banner!),
+                  );
+                } else {
+                  return SizedBox(
+                    height: 2,
+                  );
+                }
+              })),
             ],
           ),
         ),

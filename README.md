@@ -1,4 +1,5 @@
 # skany
+its enough for ads we will design overlay widget if this will not work
 * TODO remove trim() from everywhere
 * in seconactivity.java
 Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
