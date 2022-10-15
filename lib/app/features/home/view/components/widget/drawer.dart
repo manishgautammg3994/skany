@@ -129,10 +129,12 @@ Widget menuItem3(menuController) {
         menuController.controlcloseMenu();
         showAboutDialog(
           context: Get.context!,
-          applicationIcon: Image.asset(
-            "assets/images/icon.png",
-            height: 10,
-            width: 10,
+          applicationIcon: Center(
+            child: Image.asset(
+              "assets/images/icon.png",
+              height: 120,
+              width: 120,
+            ),
           ),
           applicationName: 'Skany',
           applicationLegalese: '©2022 Skany',

@@ -41,10 +41,9 @@ class QrCodeGenerator extends GetView<HomeController> {
             onPressed: () => menuController.controlMenu(),
           ),
         ),
-        backgroundColor: Colors.white70,
         title: Text(
           "SKANY",
-          style: TextStyle(color: Colors.black87, fontFamily: "Sofia"),
+          // style: TextStyle(color: Colors.black87, fontFamily: "Sofia"),
         ),
         centerTitle: true,
         elevation: 0.0,
@@ -219,7 +218,9 @@ class QrCodeGenerator extends GetView<HomeController> {
             controller.generateBarCode(controller.qrCodeinput.value);
           },
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
+              color: Colors.blue[400],
+              fontWeight: FontWeight.bold,
+              fontSize: 24),
           decoration: InputDecoration(
               hintText: "Enter Data",
               hintStyle: TextStyle(),

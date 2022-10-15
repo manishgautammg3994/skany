@@ -123,9 +123,7 @@ class QrCodeScanner extends GetView<HomeController> {
                     child: AdWidget(ad: controller.banner!),
                   );
                 } else {
-                  return SizedBox(
-                    height: 2,
-                  );
+                  return Container();
                 }
               })),
             ],
