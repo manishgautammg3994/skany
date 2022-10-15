@@ -103,7 +103,7 @@ class HomeController extends GetxController {
   Future<void> createBannerAd() async {
     banner = BannerAd(
         size: AdSize.fullBanner,
-        adUnitId: AdMobService.bannerAdUnitId ?? BannerAd.testAdUnitId,
+        adUnitId: AdMobService.bannerAdUnitId! ,
         listener: AdMobService.bannerListener,
         request: const AdRequest());
     banner?.load().then((value) => adsLoaded.value = true); //prefer large one
