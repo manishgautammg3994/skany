@@ -102,11 +102,17 @@ class HomeController extends GetxController {
 
   Future<void> createBannerAd() async {
     banner = BannerAd(
-        size: AdSize.fullBanner,
+        size: AdSize.banner,
         adUnitId: AdMobService.bannerAdUnitId!,
-        listener: AdMobService.bannerListener,
+        listener: BannerAdListener(onAdLoaded: (ad) {
+          adsLoaded.value = true;
+        }, onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        }), //
+        // AdMobService.bannerListener,
         request: const AdRequest());
-    banner?.load().then((value) => adsLoaded.value = true); //prefer large one
+    banner
+        ?.load(); //.then((value) => adsLoaded.value = true); //prefer large one
   }
 
   @override
