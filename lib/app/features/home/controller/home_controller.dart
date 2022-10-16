@@ -67,11 +67,23 @@ class HomeController extends GetxController {
       },
       cancelOnError: false,
     );
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) async {
-        createBannerAd();
-      },
-    );
+    BannerAd(
+      adUnitId: AdMobService.bannerAdUnitId!,
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          banner = ad as BannerAd;
+          adsLoaded.value = true;
+
+        },
+        onAdFailedToLoad: (ad, error) {
+          // Releases an ad resource when it fails to load
+          ad.dispose();
+          // print('Ad load failed (code=${error.code} message=${error.message})');
+        },
+      ),
+    ).load();
   }
 
   @override
@@ -99,21 +111,23 @@ class HomeController extends GetxController {
   //   super.onReady();
 
   // }
-
-  Future<void> createBannerAd() async {
-    banner = BannerAd(
-        size: AdSize.banner,
-        adUnitId: AdMobService.bannerAdUnitId!,
-        listener: BannerAdListener(onAdLoaded: (ad) {
-          adsLoaded.value = true;
-        }, onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-        }), //
-        // AdMobService.bannerListener,
-        request: const AdRequest())
-
-        ..load().then((value) => adsLoaded.value = true); //prefer large one
-  }
+  //
+  // Future<void> createBannerAd() async {
+  //   banner = BannerAd(
+  //       size: AdSize.banner,
+  //       adUnitId: AdMobService.bannerAdUnitId!,
+  //       listener: BannerAdListener(onAdLoaded: (ad) {
+  //         adsLoaded.value = true;
+  //       }, onAdFailedToLoad: (ad, error) {
+  //         ad.dispose();
+  //       }), //
+  //       // AdMobService.bannerListener,
+  //       request: const AdRequest())
+  //
+  //       ..load().then((value) => adsLoaded.value = true);
+  //   //prefer large one
+  //
+  // }
 
   @override
   void onClose() {

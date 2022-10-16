@@ -1,4 +1,32 @@
 # skany
+hi lucas make sure you sign your app with your keystore fefore publishing it to any online platform 
+<br>
+////////////////////////////////////
+##Todo for future updates
+deeplink
+<br>
+website 
+<br>
+admob
+all these are related to firebase 
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////
+
+
+
+
+
 its enough for ads we will design overlay widget if this will not work
 * TODO remove trim() from everywhere
 * in seconactivity.java

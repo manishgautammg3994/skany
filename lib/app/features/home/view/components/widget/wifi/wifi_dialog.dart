@@ -14,7 +14,7 @@ Future showWIFIDialog(
       bool isPasswFieldVisible = true;
       TextEditingController ssidCont = TextEditingController();
       TextEditingController passCont = TextEditingController();
-      GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
       String selectedType = "WPA/WPA2PSK";
       String? finalStringwifi;
 
@@ -25,38 +25,32 @@ Future showWIFIDialog(
             content: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Form(
-                  key: formKey,
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null && value?.trim() == "") {
-                        return "Enter SSID";
+                TextFormField(
+                  validator: (value) {
+                    if (value == null && value?.trim() == "") {
+                      return "Enter SSID";
+                    } else {
+                      if (value!.contains("?") ||
+                          value.contains('"') ||
+                          value.contains('\$') ||
+                          value.contains("\\") ||
+                          value.contains('[') ||
+                          value.contains(']') ||
+                          value.contains('+')) {
+                        return "remove Special character ";
                       } else {
-                        if (value!.contains("?") ||
-                            value.contains('"') ||
-                            value.contains('\$') ||
-                            value.contains("\\") ||
-                            value.contains('[') ||
-                            value.contains(']') ||
-                            value.contains('+')) {
-                          return "remove Special character ";
-                        } else {
-                          return null;
-                        }
+                        return null;
                       }
-                    },
-                    controller: ssidCont,
-                    decoration: InputDecoration(hintText: "Enter SSID"),
-                  ),
+                    }
+                  },
+                  controller: ssidCont,
+                  decoration: InputDecoration(hintText: "Enter SSID"),
                 ),
                 Visibility(
                   visible: isPasswFieldVisible,
-                  child: Form(
-                    key: isPasswFieldVisible ? formKey : null,
-                    child: TextFormField(
-                      controller: passCont,
-                      decoration: InputDecoration(hintText: "Enter Password"),
-                    ),
+                  child: TextField(
+                    controller: passCont,
+                    decoration: InputDecoration(hintText: "Enter Password (min. 8 character)"),
                   ),
                 ).paddingOnly(top: 2, bottom: 2),
                 DropdownButtonHideUnderline(
@@ -112,7 +106,7 @@ Future showWIFIDialog(
                     TextButton(
                       child: Text('OK'),
                       onPressed: () async {
-                        formKey.currentState!.validate();
+
                         String hiddenString =
                             (isChecked) ? "H:${isChecked.toString()};" : "";
                         if ((ssidCont.text.length > 0 &&
