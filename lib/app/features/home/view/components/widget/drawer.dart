@@ -132,8 +132,8 @@ Widget menuItem3(menuController) {
           applicationIcon: Center(
             child: Image.asset(
               "assets/images/icon.png",
-              height: 120,
-              width: 120,
+              height: 90,
+              width: 90,
             ),
           ),
           applicationName: 'Skany',

@@ -92,8 +92,6 @@ class _HomePageState extends State<HomePage> {
         ],
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.blueAccent,
         iconSize: 35,
         onTap: _onItemTapped,
         elevation: 5,
