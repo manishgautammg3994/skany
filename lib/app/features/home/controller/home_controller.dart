@@ -110,9 +110,9 @@ class HomeController extends GetxController {
           ad.dispose();
         }), //
         // AdMobService.bannerListener,
-        request: const AdRequest());
-    banner
-        ?.load(); //.then((value) => adsLoaded.value = true); //prefer large one
+        request: const AdRequest())
+
+        ..load().then((value) => adsLoaded.value = true); //prefer large one
   }
 
   @override
