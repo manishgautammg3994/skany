@@ -10,8 +10,4 @@ liberapay: # Replace with a single Liberapay username
 issuehunt: # Replace with a single IssueHunt username
 otechie: # Replace with a single Otechie username
 lfx_crowdfunding: # Replace with a single LFX Crowdfunding project-name e.g., cloud-foundry
-custom:
-  - "paytmmp://pay?pa=8607573994@paytm&pn=Manish&cu=INR"
-  - "upi://pay?pa=8607573994@paytm&pn=Manish&cu=INR"
-  - "upi://pay?pa=8607573994@paytm&pn=Manish&cu=INR"
-  - "phonepe://pay?pa=8607573994@paytm&pn=Manish&cu=INR"
+custom: [ "paytmmp://pay?pa=8607573994@paytm&pn=Manish&cu=INR" , "upi://pay?pa=8607573994@paytm&pn=Manish&cu=INR" , "upi://pay?pa=8607573994@paytm&pn=Manish&cu=INR" , "phonepe://pay?pa=8607573994@paytm&pn=Manish&cu=INR" ]
